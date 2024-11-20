@@ -3,6 +3,8 @@ const express = require('express');
 const sequelize = require('./config/db');
 const routes = require('/routes');
 const app = express();
+const setupSwagger = require('./config/swagger');
+setupSwagger(app);
 
 const PORT = process.env.PORT || 5000;
 
