@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const sequelize = require('./config/db');
-const routes = require('./routes');
+const routes = require('./routes/VoterRoutes');
 const app = express();
 const setupSwagger = require('./config/swagger');
 const errorHandler = require('./middleware/errorHandler');
@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json());
 
 // Routes
-app.get('/api', routes);
+app.use('/api/voters', routes);
 
 // start server
 app.listen(PORT, async () => {

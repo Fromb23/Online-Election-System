@@ -6,8 +6,8 @@ const router = express.Router();
 // create a new voter
 router.post('/', async (req, res) => {
 	try {
-		const { voterID, fullName, Constituency } = res.body;
-		const newVoter = await Voter.create({ voterID, fullName, Constituency });
+		const { voterId, fullName, constituency } = req.body;
+		const newVoter = await Voter.create({ voterId, fullName, constituency });
 		res.status(201).json(newVoter);
 	} catch (err) {
 		res.status(500).json({ error: err.message });
