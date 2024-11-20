@@ -15,7 +15,7 @@ router.post('/', async (req, res) => {
 });
 
 // Get all voters
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
 	try {
 		const voters = await Voter.findAll();
 		res.status(200).json(voters);
@@ -25,7 +25,7 @@ router.get('/', (req, res) => {
 });
 
 // update a voter
-router.put('/:id', (req, res) => {
+router.put('/:id', async (req, res) => {
 	try {
 		const { id } = req.params;
 		const { fullName, constituency } = req.body;
@@ -43,7 +43,7 @@ router.put('/:id', (req, res) => {
 });
 
 // Delete voter
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
 	try {
 		const { id} = req.params;
 		const voter = await Voter.findByPk(id);

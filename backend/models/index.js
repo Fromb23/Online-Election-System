@@ -1,18 +1,65 @@
-const sequelize = require('../config/db');
-const Voter = require('./Voter');
-const Candidate = require('./Candidate');
-const VoteCategory = require('./VoteCategory');
-const County = require('./County');
-const Constituency = require('./Constituency');
-const Ward = require('./Ward');
-const CandidateVoter = require('./CandidateVoter');
+'use strict';
 
-Candidate.belongsToMany(Voter, { through: CandidateVoter });
-Voter.belongsToMany(Candidate, { through: CandidateVoter });
+const fs = require('fs');
+const path = require('path');
+const Sequelize = require('sequelize');
+const basename = path.basename(__filename);
+const env = process.env.NODE_ENV || 'development';
+const config = require(__dirname + '/../config/config.json')[env];
+const db = {};
 
-// Sync database
-sequelize.sync({ force: false })
-  .then(() => console.log('Database synced successfully'))
-  .catch(err => console.log('Error syncing database:', err));
+// Initialize Sequelize instance
+const sequelize = new Sequelize(
+  config.database,
+  config.username,
+  config.password,
+  config
+);
 
-module.exports = { Voter, Candidate, VoteCategory, County, Constituency, Ward, CandidateVoter };
+// Import models manually
+const Candidate = require('./candidate');
+const VoteCategory = require('./voteCategory');
+const CandidateVoteCategory = require('./candidateVoteCategory');
+
+// Setup associations
+Candidate.belongsToMany(VoteCategory, {
+  through: CandidateVoteCategory,
+  foreignKey: 'candidateId',
+});
+VoteCategory.belongsToMany(Candidate, {
+  through: CandidateVoteCategory,
+  foreignKey: 'voteCategoryId',
+});
+
+// Add models to the `db` object
+db.Candidate = Candidate;
+db.VoteCategory = VoteCategory;
+db.CandidateVoteCategory = CandidateVoteCategory;
+
+// Automatically import and initialize other models in the folder
+fs.readdirSync(__dirname)
+  .filter((file) => {
+    return (
+      file.indexOf('.') !== 0 &&
+      file !== basename &&
+      file.slice(-3) === '.js' &&
+      file.indexOf('.test.js') === -1
+    );
+  })
+  .forEach((file) => {
+    const model = require(path.join(__dirname, file));
+    db[model.name] = model;
+  });
+
+// Call associate methods on models if they exist
+Object.keys(db).forEach((modelName) => {
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
+  }
+});
+
+// Add Sequelize and sequelize to the `db` object for exporting
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
+
+module.exports = db;

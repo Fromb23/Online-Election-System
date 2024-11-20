@@ -1,8 +1,8 @@
 const express = require('express');
-const voterRoutes = require('VoterRoutes');
+const voterRoutes = require('./VoterRoutes');
 
 const router = express.Router();
 
-router.use('/voter', VoterRoutes);
+router.use('/voter', voterRoutes);
 
-modules.exports = router;
+module.exports = router;

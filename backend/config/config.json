@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "fromb",
+    "password": "fromb123",
+    "database": "electiondb",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "fromb",
+    "password": "fromb123",
+    "database": "electiondb_test",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "fromb",
+    "password": "fromb123",
+    "database": "electiondb_prod",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}

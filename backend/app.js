@@ -1,10 +1,16 @@
 require('dotenv').config();
 const express = require('express');
 const sequelize = require('./config/db');
-const routes = require('/routes');
+const routes = require('./routes');
 const app = express();
 const setupSwagger = require('./config/swagger');
+const errorHandler = require('./middleware/errorHandler');
+const morgan = require('morgan');
+const cors = require('cors');
 setupSwagger(app);
+app.use(errorHandler);
+app.use(morgan('dev'));
+app.use(cors());
 
 const PORT = process.env.PORT || 5000;
 

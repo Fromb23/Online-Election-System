@@ -1,11 +1,25 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db');
-
-const Voter = sequelize.define('Voter', {
-	id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-	voterID: { type: DataTypes.INTEGER, allownull: false, unique: true },
-	fullName: { type: DataTypes.STRING, allowNull: false },
-  	constituency: { type: DataTypes.STRING, allowNull: false },
-});
-
-module.exports = Voter;
+'use strict';
+const {
+  Model
+} = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
+  class Voter extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
+    static associate(models) {
+      // define association here
+    }
+  }
+  Voter.init({
+    voterId: DataTypes.STRING,
+    fullName: DataTypes.STRING,
+    constituency: DataTypes.STRING
+  }, {
+    sequelize,
+    modelName: 'Voter',
+  });
+  return Voter;
+};
