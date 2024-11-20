@@ -49,7 +49,7 @@ router.delete('/:id', async (req, res) => {
 		const voter = await Voter.findByPk(id);
 		if (!voter) return res.status(401).json({ error: 'Voter not found!' });
 
-		voter.destory();
+		voter.destroy();
 		res.status(200).json({ message: 'Voter deleted successfully...' });
 	} catch (err) {
 		res.status(500).json({ error: err.message });
