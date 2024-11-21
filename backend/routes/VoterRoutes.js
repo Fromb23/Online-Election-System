@@ -6,8 +6,8 @@ const router = express.Router();
 // create a new voter
 router.post('/', async (req, res) => {
 	try {
-		const { voterId, fullName, constituency } = req.body;
-		const newVoter = await Voter.create({ voterId, fullName, constituency });
+		const { voterId, fullName, constituency, voted } = req.body;
+		const newVoter = await Voter.create({ voterId, fullName, constituency, voted });
 		res.status(201).json(newVoter);
 	} catch (err) {
 		res.status(500).json({ error: err.message });
@@ -28,12 +28,13 @@ router.get('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
 	try {
 		const { id } = req.params;
-		const { fullName, constituency } = req.body;
+		const { fullName, constituency, voted } = req.body;
 		const voter = await Voter.findByPk(id);
 		if (!voter) return res.status(401).json({ error: 'Voter not found' });
 
 		voter.fullName = fullName || voter.fullName;
 		voter.constituency = constituency || voter.constituency;
+		voter.voted = voted || voter.voted;
 		voter.save();
 
 		res.status(200).json(voter)
