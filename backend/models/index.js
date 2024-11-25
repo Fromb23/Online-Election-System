@@ -17,10 +17,10 @@ const sequelize = new Sequelize(
 );
 
 // Import models manually
-const Candidate = require('./Candidate');
-const VoteCategory = require('./VoteCategory');
-const Voter = require('./Voter');
-const Vote = require('./Vote');
+const Candidate = require('./candidate');
+const VoteCategory = require('./voteCategory');
+const Voter = require('./voter');
+const Vote = require('./vote');
 
 // Defone associations
 Voter.belongsToMany(Candidate, { through: Vote });

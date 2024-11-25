@@ -1,5 +1,5 @@
+const sequelize = require('../config/db');
 const { DataTypes } = require('sequelize');
-const sequelize = require('.../config/db');
 
 const Vote = sequelize.define('Vote', {
 	voteId: { type: DataTypes.STRING, primaryKey: true },
@@ -10,4 +10,4 @@ const Vote = sequelize.define('Vote', {
 	timestamps: true
 });
 
-model.exports = Vote;
+module.exports = Vote;
