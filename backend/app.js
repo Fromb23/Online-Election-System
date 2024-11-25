@@ -3,6 +3,7 @@ const express = require('express');
 const sequelize = require('./config/db');
 const voterRoutes = require('./routes/VoterRoutes');
 const voteCategoryRoutes = require('./routes/VoteCategoryRoutes');
+const partyRoutes = require('./routes/PartyRoutes');
 const app = express();
 const setupSwagger = require('./config/swagger');
 const errorHandler = require('./middleware/errorHandler');
@@ -20,6 +21,7 @@ app.use(express.json());
 // Routes
 app.use('/api/voters', voterRoutes);
 app.use('/api/votecategories', voteCategoryRoutes);
+app.use('/api/parties', partyRoutes);
 
 // start server
 app.listen(PORT, async () => {

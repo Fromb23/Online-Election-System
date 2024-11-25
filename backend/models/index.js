@@ -21,6 +21,7 @@ const Candidate = require('./candidate');
 const VoteCategory = require('./voteCategory');
 const Voter = require('./voter');
 const Vote = require('./vote');
+const Party = require('./party');
 
 // Defone associations
 Voter.belongsToMany(Candidate, { through: Vote });
@@ -35,11 +36,15 @@ Vote.belongsTo(Candidate);
 Voter.hasMany(Vote);
 Candidate.hasMany(Vote);
 
+Candidate.belongsTo(Party, { foreignKey: 'PartyId' });
+Party.hasMany(Candidate, { foreignKey: 'PartyId' });
+
 // Add models to the `db` object
 db.Candidate = Candidate;
 db.VoteCategory = VoteCategory;
 db.Voter = Voter;
 db.Vote = Vote;
+db.Party = Party;
 
 // Automatically import and initialize other models in the folder
 fs.readdirSync(__dirname)
