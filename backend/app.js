@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const sequelize = require('./config/db');
 const voterRoutes = require('./routes/VoterRoutes');
+const candidateRoutes = require('./routes/CandidateRoutes');
 const voteCategoryRoutes = require('./routes/VoteCategoryRoutes');
 const partyRoutes = require('./routes/PartyRoutes');
 const app = express();
@@ -20,6 +21,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/voters', voterRoutes);
+app.use('/api/candidates', candidateRoutes);
 app.use('/api/votecategories', voteCategoryRoutes);
 app.use('/api/parties', partyRoutes);
 
