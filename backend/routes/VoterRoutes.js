@@ -24,12 +24,25 @@ router.get('/', async (req, res) => {
 	}
 });
 
-// update a voter
-router.put('/:id', async (req, res) => {
+// Get voter by id
+router.get('/:voterId', async (req, res) => {
 	try {
-		const { id } = req.params;
+		const { voterId } = req.params;
+		const voter = await Voter.findByPk(voterId);
+		if (!voter) return res.status(401).json({ error: 'Voter not found' });
+		res.status(200).json(voter);
+	} catch (err) {
+		res.status(500).json({ error: err.message });
+	}
+});
+
+
+// update a voter
+router.put('/:voterId', async (req, res) => {
+	try {
+		const { voterId } = req.params;
 		const { fullName, constituency, voted } = req.body;
-		const voter = await Voter.findByPk(id);
+		const voter = await Voter.findByPk(voterId);
 		if (!voter) return res.status(401).json({ error: 'Voter not found' });
 
 		voter.fullName = fullName || voter.fullName;
@@ -44,10 +57,10 @@ router.put('/:id', async (req, res) => {
 });
 
 // Delete voter
-router.delete('/:id', async (req, res) => {
+router.delete('/:voterId', async (req, res) => {
 	try {
-		const { id} = req.params;
-		const voter = await Voter.findByPk(id);
+		const { voterId} = req.params;
+		const voter = await Voter.findByPk(voterId);
 		if (!voter) return res.status(401).json({ error: 'Voter not found!' });
 
 		voter.destroy();
