@@ -6,6 +6,8 @@ const Vote = sequelize.define('Vote', {
 	VoterId: { type: DataTypes.INTEGER, allowNull: false },
     	CandidateId: { type: DataTypes.INTEGER, allowNull: false },
 	VoteCategoryId: { type: DataTypes.INTEGER, allowNull: false }
+}, {
+	timestamps: true
 });
 
 model.exports = Vote;
