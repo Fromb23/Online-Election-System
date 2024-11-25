@@ -3,7 +3,7 @@ const sequelize = require('../config/db');
 
 const Candidate = sequelize.define('Candidate', {
 	candidateId: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-	name: { type: DataTypes.STRING, allowNull: false },
+	candidateName: { type: DataTypes.STRING, allowNull: false },
 	party: { type: DataTypes.STRING, allowNull: false },
 	voted: { type: DataTypes.BOOLEAN, defaultValue: false },
 	voteCategoryId: {
@@ -11,7 +11,7 @@ const Candidate = sequelize.define('Candidate', {
 		allowNull: false,
 		references: {
 			model: 'VoteCategories',
-			key: 'id'
+			key: 'voteCategoryId'
 		},
 	},
 });
