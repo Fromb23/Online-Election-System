@@ -17,20 +17,29 @@ const sequelize = new Sequelize(
 );
 
 // Import models manually
-const Candidate = require('./candidate');
-const VoteCategory = require('./voteCategory');
+const Candidate = require('./Candidate');
+const VoteCategory = require('./VoteCategory');
+const Voter = require('./Voter');
+const Vote = require('./Vote');
 
-// Setup associations
-Candidate.belongsTo(VoteCategory, {
-	foreignKey: 'candidateId',
-});
-VoteCategory.hasMany(Candidate, {
-	foreignKey: 'voteCategoryId',
-});
+// Defone associations
+Voter.belongsToMany(Candidate, { through: Vote });
+Candidate.belongsToMany(Voter, { through: Vote });
+
+VoteCategory.hasMany(Vote);
+Vote.belongsTo(VoteCategory);
+
+Vote.belongsTo(Voter);
+Vote.belongsTo(Candidate);
+
+Voter.hasMany(Vote);
+Candidate.hasMany(Vote);
 
 // Add models to the `db` object
 db.Candidate = Candidate;
 db.VoteCategory = VoteCategory;
+db.Voter = Voter;
+db.Vote = Vote;
 
 // Automatically import and initialize other models in the folder
 fs.readdirSync(__dirname)
