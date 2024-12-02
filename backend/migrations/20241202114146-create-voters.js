@@ -2,12 +2,11 @@
 
 module.exports = {
 	up: async (queryInterface, Sequelize) => {
-		// Alter the 'Voters' table
 		await queryInterface.createTable('Voters', {
 			voterId: {
 				type: Sequelize.STRING,
+				primaryKey: true,
 				allowNull: false,
-				primaryKey: true,  // Set 'voterId' as the primary key
 			},
 			fullName: {
 				type: Sequelize.STRING,
@@ -24,16 +23,17 @@ module.exports = {
 			createdAt: {
 				type: Sequelize.DATE,
 				allowNull: false,
+				defaultValue: Sequelize.fn('NOW'),
 			},
 			updatedAt: {
 				type: Sequelize.DATE,
 				allowNull: false,
+				defaultValue: Sequelize.fn('NOW'),
 			},
 		});
 	},
 
 	down: async (queryInterface, Sequelize) => {
-		// Revert the changes in case of rollback
 		await queryInterface.dropTable('Voters');
-	}
+	},
 };

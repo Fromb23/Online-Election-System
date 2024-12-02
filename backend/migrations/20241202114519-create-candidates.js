@@ -2,53 +2,54 @@
 
 module.exports = {
 	up: async (queryInterface, Sequelize) => {
-		await queryInterface.createTable('Votes', {
-			voteId: {
+		await queryInterface.createTable('Candidates', {
+			candidateId: {
 				type: Sequelize.INTEGER,
 				primaryKey: true,
 				autoIncrement: true,
 			},
-			VoterId: {
+			candidateName: {
+				type: Sequelize.STRING,
+				allowNull: false,
+			},
+			PartyId: {
 				type: Sequelize.INTEGER,
 				allowNull: false,
 				references: {
-					model: 'Voters',
-					key: 'voterId',
+					model: 'Parties', // Refers to the table 'Parties'
+					key: 'partyId',
 				},
+				onUpdate: 'CASCADE',
 				onDelete: 'CASCADE',
 			},
-			CandidateId: {
-				type: Sequelize.INTEGER,
-				allowNull: false,
-				references: {
-					model: 'Candidates',
-					key: 'candidateId',
-				},
-				onDelete: 'CASCADE',
+			voted: {
+				type: Sequelize.BOOLEAN,
+				defaultValue: false,
 			},
-			VoteCategoryId: {
+			voteCategoryId: {
 				type: Sequelize.INTEGER,
 				allowNull: false,
 				references: {
-					model: 'VoteCategories',
+					model: 'VoteCategories', // Refers to the table 'VoteCategories'
 					key: 'voteCategoryId',
 				},
+				onUpdate: 'CASCADE',
 				onDelete: 'CASCADE',
 			},
 			createdAt: {
 				type: Sequelize.DATE,
 				allowNull: false,
-				defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+				defaultValue: Sequelize.fn('NOW'),
 			},
 			updatedAt: {
 				type: Sequelize.DATE,
 				allowNull: false,
-				defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+				defaultValue: Sequelize.fn('NOW'),
 			},
 		});
 	},
 
 	down: async (queryInterface, Sequelize) => {
-		await queryInterface.dropTable('Votes');
+		await queryInterface.dropTable('Candidates');
 	},
 };
