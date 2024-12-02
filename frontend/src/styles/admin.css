@@ -1,56 +1,23 @@
-.admin-header {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px;
-  background-color: #f8f9fa;
+/* admin.css - Styles for the Admin Dashboard */
+.admin-dashboard {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
 }
 
-.profile-section {
-  position: relative;
+.admin-container {
+	display: flex;
+	flex: 1;
+	background-color: #f4f4f4;
 }
 
-.profile-dropdown {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background: white;
-  border: 1px solid #ddd;
-  padding: 10px;
+.admin-content {
+	flex: 1;
+	padding: 20px;
+	background-color: white;
 }
 
-.sidebar {
-  width: 200px;
-  background: #343a40;
-  color: white;
-  padding: 20px;
-  height: 100vh;
-}
-
-.sidebar nav ul {
-  list-style: none;
-  padding: 0;
-}
-
-.sidebar nav ul li {
-  margin: 10px 0;
-}
-
-.logout-btn {
-  background: red;
-  color: white;
-  padding: 10px;
-  border: none;
-  width: 100%;
-}
-
-.breadcrumb {
-  padding: 10px;
-  background-color: #e9ecef;
-  margin-bottom: 20px;
-}
-
-.admin-footer {
-  text-align: center;
-  padding: 10px;
-  background-color: #f8f9fa;
+.content-area {
+	padding: 20px;
+	margin-top: 20px;
 }

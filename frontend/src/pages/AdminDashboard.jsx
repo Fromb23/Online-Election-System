@@ -1,13 +1,14 @@
 import React from 'react';
-import AdminHeader from '../components/AdminHeader';
 import Sidebar from '../components/Sidebar';
 import Breadcrumb from '../components/Breadcrumb';
-import Footer from '../components/Footer';
+import AdminHeader from '../components/AdminHeader';
+import '../styles/admin.css';
 
-const AdminDashboard = ({ children }) => {
+const AdminDashboard = ({ children, adminName }) => {
 	return (
 		<div className="admin-dashboard">
-		<AdminHeader />
+		{/* Include the Admin Header */}
+		<AdminHeader adminName={adminName} />
 		<div className="admin-container">
 		<Sidebar />
 		<div className="admin-content">
@@ -15,7 +16,6 @@ const AdminDashboard = ({ children }) => {
 		<div className="content-area">{children}</div>
 		</div>
 		</div>
-		<Footer />
 		</div>
 	);
 };
