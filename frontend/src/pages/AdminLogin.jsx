@@ -9,18 +9,38 @@ const AdminLogin = ({ setAdminName }) => {
 	const [error, setError] = useState('');
 	const navigate = useNavigate();
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		// Simulating a login API request
-		if (email === 'email@gmail.com' && password === 'password') {
-			setAdminName('Admin User');
-			navigate('/admin');
-		} else {
-			setError('Invalid credentials');
+		try {
+			// Sending a Post req
+			const response = await fetch('http://localhost:5000/api/admins/login', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					email: email,
+					password: password,
+				}),
+			});
+			console.log(response);
+
+			// Parse the JSON response
+			const data = await response.json();
+			console.log(data);
+
+			if (response.ok) {
+				setAdminName(data.username);
+				navigate('/admin');
+			} else {
+				setError('Invalid credentials');
+			}
+		} catch (error) {
+			console.error('Error during login:', error);
+			setError('An error occurred, please try again later');
 		}
 	};
-
 	const containerStyles = {
 		display: 'flex',
 		flexDirection: 'column',
