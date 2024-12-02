@@ -4,11 +4,11 @@ import Breadcrumb from '../components/Breadcrumb';
 import AdminHeader from '../components/AdminHeader';
 import '../styles/admin.css';
 
-const AdminDashboard = ({ children, adminName }) => {
+const AdminDashboard = ({ children }) => {
 	return (
 		<div className="admin-dashboard">
 		{/* Include the Admin Header */}
-		<AdminHeader adminName={adminName} />
+		<AdminHeader />
 		<div className="admin-container">
 		<Sidebar />
 		<div className="admin-content">

@@ -1,29 +1,38 @@
-import React, { useState} from 'react';
+import React from 'react';
 import './styles/admin.css';
 import Header from './components/Header';
 import AdminLogin from './pages/AdminLogin';
 import Footer from './components/Footer';
 import Grid from './components/Grid';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Outlet, Navigate } from 'react-router-dom';
 import AdminDashboard from './pages/AdminDashboard';
+import { useSelector } from 'react-redux';
 import './App.css';
 
+const AuthLayout = () => {
+	const { userInfo } = useSelector((state) => state.user);
+	if (!userInfo) {
+		return <Navigate to='/admin/login' />;
+	}
+	return <Outlet />
+};
 function App() {
-    const [adminName, setAdminName] = useState('');
-
     return (
         <Router>
             <Routes>
                 {/* Admin Routes */}
+	    <Route element={<AuthLayout />}
+	    >
                 <Route
                     path="/admin/*"
                     element={
-                        <AdminDashboard adminName={adminName} />
+                        <AdminDashboard />
                     }
                 />
+	    </Route>
                 <Route
                     path="/admin/login"
-                    element={<AdminLogin setAdminName={setAdminName} />}
+                    element={<AdminLogin />}
                 />
 
                 {/* Main Site Routes */}

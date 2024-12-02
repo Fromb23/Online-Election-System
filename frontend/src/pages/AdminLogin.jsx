@@ -1,46 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { login } from '../redux/actions/userActions';
+import { useDispatch, useSelector } from 'react-redux';
 
 const AdminLogin = ({ setAdminName }) => {
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const { loading, error, userInfo } = useSelector((state) => state.user);
+
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [error, setError] = useState('');
-	const navigate = useNavigate();
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = (e) => {
 		e.preventDefault();
+		dispatch(login({ email, password }));
 
-		try {
-			// Sending a Post req
-			const response = await fetch('http://localhost:5000/api/admins/login', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					email: email,
-					password: password,
-				}),
-			});
-			console.log(response);
-
-			// Parse the JSON response
-			const data = await response.json();
-			console.log(data);
-
-			if (response.ok) {
-				setAdminName(data.username);
-				navigate('/admin');
-			} else {
-				setError('Invalid credentials');
-			}
-		} catch (error) {
-			console.error('Error during login:', error);
-			setError('An error occurred, please try again later');
-		}
 	};
+	useEffect(() => {
+		if (userInfo) {
+			navigate('/admin');
+		}
+	}, [userInfo, navigate]);
+
 	const containerStyles = {
 		display: 'flex',
 		flexDirection: 'column',

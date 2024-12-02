@@ -1,7 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from '../redux/slices/userSlices';
 
 const Sidebar = () => {
+	const dispatch = useDispatch();
+
 	const sidebarStyles = {
 		backgroundColor: '#333',
 		color: '#fff',
@@ -41,6 +45,10 @@ const Sidebar = () => {
 		transition: 'background-color 0.3s ease',
 	};
 
+	const handleLogout = () => {
+		dispatch(logout());
+	};	
+
 	return (
 		<aside style={sidebarStyles}>
 		<nav>
@@ -67,7 +75,8 @@ const Sidebar = () => {
 		</li>
 		</ul>
 		</nav>
-		<button style={logoutBtnStyles}>Logout</button>
+		<button style={logoutBtnStyles} onClick={ handleLogout}>Logout</button>
+
 		</aside>
 	);
 };

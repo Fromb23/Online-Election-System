@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 
-const AdminHeader = ({ adminName }) => {
+const AdminHeader = () => {
+	const { userInfo } = useSelector((state) => state.user);
 	const [showProfile, setShowProfile] = useState(false);
 	const profileRef = useRef(null); // Reference to the profile icon and dropdown
 	const dropdownRef = useRef(null); // Reference to the dropdown menu
@@ -87,7 +89,7 @@ const AdminHeader = ({ adminName }) => {
 		className="profile-icon"
 		style={{ width: '30px', height: '30px', marginRight: '10px' }}
 		/>
-		<span>Welcome, {adminName || 'Admin'}</span>
+		<span>Welcome, {userInfo?.username || 'Admin'}</span>
 
 		{/* Profile dropdown */}
 		{showProfile && (
