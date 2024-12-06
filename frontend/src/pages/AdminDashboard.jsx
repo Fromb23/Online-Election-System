@@ -4,7 +4,7 @@ import Breadcrumb from '../components/Breadcrumb';
 import AdminHeader from '../components/AdminHeader';
 import '../styles/admin.css';
 
-const AdminDashboard = ({ children }) => {
+const AdminDashboardLayout = ({ children }) => {
 	return (
 		<div className="admin-dashboard">
 		{/* Include the Admin Header */}
@@ -13,11 +13,13 @@ const AdminDashboard = ({ children }) => {
 		<Sidebar />
 		<div className="admin-content">
 		<Breadcrumb />
-		<div className="content-area">{children}</div>
+		<div className="content-area">
+		{ children }
+		</div>
 		</div>
 		</div>
 		</div>
 	);
 };
 
-export default AdminDashboard;
+export default AdminDashboardLayout;

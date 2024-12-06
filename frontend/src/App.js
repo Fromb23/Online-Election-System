@@ -1,11 +1,12 @@
 import React from 'react';
 import './styles/admin.css';
 import Header from './components/Header';
+import VoterComponent from './components/VoterComponent';
 import AdminLogin from './pages/AdminLogin';
 import Footer from './components/Footer';
 import Grid from './components/Grid';
 import { BrowserRouter as Router, Routes, Route, Outlet, Navigate } from 'react-router-dom';
-import AdminDashboard from './pages/AdminDashboard';
+import AdminDashboardLayout from './pages/AdminDashboard';
 import { useSelector } from 'react-redux';
 import './App.css';
 
@@ -14,7 +15,11 @@ const AuthLayout = () => {
 	if (!userInfo) {
 		return <Navigate to='/admin/login' />;
 	}
-	return <Outlet />
+	return (
+		<AdminDashboardLayout>
+			<Outlet />
+		</AdminDashboardLayout>
+	)
 };
 function App() {
     return (
@@ -23,12 +28,7 @@ function App() {
                 {/* Admin Routes */}
 	    <Route element={<AuthLayout />}
 	    >
-                <Route
-                    path="/admin/*"
-                    element={
-                        <AdminDashboard />
-                    }
-                />
+	    <Route path="/admin/voters" element ={<VoterComponent />} />
 	    </Route>
                 <Route
                     path="/admin/login"

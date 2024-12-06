@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../redux/slices/userSlices';
+import { fetchVoters } from '../redux/slices/voterSlices';
 
 const Sidebar = () => {
 	const dispatch = useDispatch();
@@ -49,12 +50,16 @@ const Sidebar = () => {
 		dispatch(logout());
 	};	
 
+	const handleFetchVoters = () => {
+		dispatch(fetchVoters('V12345'));
+	};
+
 	return (
 		<aside style={sidebarStyles}>
 		<nav>
 		<ul style={navStyles}>
 		<li style={navItemStyles}>
-		<Link to="/admin/voters" style={linkStyles}>
+		<Link to="/admin/voters" style={linkStyles} onClick={handleFetchVoters}>
 		Voters
 		</Link>
 		</li>
