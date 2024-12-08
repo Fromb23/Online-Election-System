@@ -2,6 +2,7 @@ import React from 'react';
 import './styles/admin.css';
 import Header from './components/Header';
 import VoterComponent from './components/VoterComponent';
+import UpdateVoterPage from './components/UpdateVoterPage';
 import AdminLogin from './pages/AdminLogin';
 import Footer from './components/Footer';
 import Grid from './components/Grid';
@@ -29,6 +30,7 @@ function App() {
 	    <Route element={<AuthLayout />}
 	    >
 	    <Route path="/admin/voters" element ={<VoterComponent />} />
+	    <Route path="/admin/voters/update/:voterId" element={<UpdateVoterPage />} />
 	    </Route>
                 <Route
                     path="/admin/login"
