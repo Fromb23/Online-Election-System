@@ -5,6 +5,7 @@ const voterRoutes = require('./routes/VoterRoutes');
 const candidateRoutes = require('./routes/CandidateRoutes');
 const voteCategoryRoutes = require('./routes/VoteCategoryRoutes');
 const partyRoutes = require('./routes/PartyRoutes');
+const adminRoutes = require('./routes/AdminRoutes');
 const app = express();
 const setupSwagger = require('./config/swagger');
 const errorHandler = require('./middleware/errorHandler');
@@ -24,7 +25,7 @@ app.use('/api/voters', voterRoutes);
 app.use('/api/candidates', candidateRoutes);
 app.use('/api/votecategories', voteCategoryRoutes);
 app.use('/api/parties', partyRoutes);
-app.use('api/admin', adminRoutes);
+app.use('/api/admins', adminRoutes);
 
 // start server
 app.listen(PORT, async () => {

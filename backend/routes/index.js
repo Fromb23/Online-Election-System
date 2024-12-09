@@ -11,6 +11,6 @@ router.use('/voter', voterRoutes);
 router.use('/candidates', candidateRoutes);
 router.use('/votecategory', voteCategoryRoutes);
 router.use('/parties', partyRoutes);
-router.use('/admin', adminRoutes);
+router.use('/admins', adminRoutes);
 
 module.exports = router;
