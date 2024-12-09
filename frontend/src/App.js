@@ -4,6 +4,7 @@ import Header from './components/Header';
 import VoterComponent from './components/VoterComponent';
 import UpdateVoterPage from './components/UpdateVoterPage';
 import AdminLogin from './pages/AdminLogin';
+import CreateAdmin from './pages/CreateAdmin'; 
 import Footer from './components/Footer';
 import Grid from './components/Grid';
 import { BrowserRouter as Router, Routes, Route, Outlet, Navigate } from 'react-router-dom';
@@ -35,6 +36,10 @@ function App() {
                 <Route
                     path="/admin/login"
                     element={<AdminLogin />}
+                />
+                <Route 
+                path="/admin/create"
+                element={<CreateAdmin />}
                 />
 
                 {/* Main Site Routes */}
