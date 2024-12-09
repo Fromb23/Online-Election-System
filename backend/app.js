@@ -24,6 +24,7 @@ app.use('/api/voters', voterRoutes);
 app.use('/api/candidates', candidateRoutes);
 app.use('/api/votecategories', voteCategoryRoutes);
 app.use('/api/parties', partyRoutes);
+app.use('api/admin', adminRoutes);
 
 // start server
 app.listen(PORT, async () => {
