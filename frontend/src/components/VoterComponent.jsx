@@ -1,25 +1,25 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchVoters, createVoter, updateVoter, deleteVoter } from '../redux/slices/voterSlices';
+import { fetchVoters, createVoter, updateVoter, deleteVoter } from '../redux/actions/voterActions';
 
 const VoterComponent = () => {
 	const { selectedVoter, list:voters, loading, error } = useSelector((state) => state.voters);
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		dispatch(fetchVoters());
 	}, [dispatch]);
 
 	const handleCreate = () => {
-		const newVoter = { voterId: 'V12345', name: 'John Doe' };
-		dispatch(createVoter(newVoter));
+		navigate('/voters/create');
 	};
 
-	const handleUpdate = (voterId) => {
-		const updatedVoter = { name: 'Updated Name' };
-		dispatch(updateVoter({ voterId, updatedVoter }));
-	};
+	// const handleUpdate = (voterId) => {
+	// 	const updatedVoter = { name: 'Updated Name' };
+	// 	dispatch(updateVoter({ voterId, updatedVoter }));
+	// };
 	const handleDelete = (voterId) => {
 		dispatch(deleteVoter(voterId));
 	};

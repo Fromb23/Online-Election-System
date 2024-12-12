@@ -1,12 +1,22 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const Card = ({ title, icon }) => {
-	return (
-		<div style={cardStyles}>
-		<div>{icon}</div>
-		<div>{title}</div>
-		</div>
-	);
+const Card = ({ title, icon, link }) => {
+  return (
+    <div style={cardStyles}>
+      {link ? (
+        <Link to={link} style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div>{icon}</div>
+          <div>{title}</div>
+        </Link>
+      ) : (
+        <>
+          <div>{icon}</div>
+          <div>{title}</div>
+        </>
+      )}
+    </div>
+  );
 };
 
 const cardStyles = {

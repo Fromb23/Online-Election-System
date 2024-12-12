@@ -1,0 +1,101 @@
+.dashboard {
+	padding: 20px;
+	background-color: #f4f4f4;
+	font-family: Arial, sans-serif;
+  }
+  
+  h1, h2 {
+	color: #333;
+  }
+  
+  .stats-summary {
+	display: flex;
+	gap: 20px;
+	margin-bottom: 30px;
+  }
+  
+  .stat-card {
+	background: #fff;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	padding: 20px;
+	flex: 1;
+	text-align: center;
+	position: relative;
+  }
+  
+  .stat-card h3 {
+	margin: 0;
+	font-size: 1rem;
+	color: white;
+	color: #555;
+  }
+  
+  .stat-card p {
+	font-size: 2rem;
+	font-weight: bold;
+	margin: 10px 0;
+  }
+  
+  .stat-card:nth-child(1) {
+	background-color: #4d4d4d;
+	color: #fff;
+  }
+  
+  .stat-card:nth-child(2) {
+	background-color: #28a745;
+	color: #fff;
+  }
+  
+  .stat-card:nth-child(3) {
+	background-color: #007bff;
+	color: #fff;
+  }
+  
+  .stat-card:nth-child(4) {
+	background-color: #dc3545;
+	color: #fff;
+  }
+  
+  .tally-section {
+	background: #fff;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	padding: 20px;
+  }
+  
+  .tally-section h2 {
+	font-size: 1.5rem;
+	color: #333;
+  }
+  
+  .chart-container {
+	flex: 1 1 calc(50% - 20px);
+	background: #fff;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	padding: 20px;
+  }
+  
+  .chart-container h4 {
+	margin-bottom: 10px;
+	font-size: 1.2rem;
+	color: #555;
+  }
+  
+  .export-button {
+	display: inline-block;
+	margin-top: 10px;
+	background: #28a745;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 4px;
+	font-size: 1rem;
+	cursor: pointer;
+	transition: background 0.3s;
+  }
+  
+  .export-button:hover {
+	background: #218838;
+  }  

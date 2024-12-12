@@ -1,0 +1,76 @@
+.voter-login-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	background: url('../assets/images/voterLoginBackground.jpg') no-repeat center center/cover;
+  }
+  
+  .voter-login-card {
+	background-color: #fff;
+	border-radius: 10px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+	padding: 20px;
+	text-align: center;
+	width: 300px;
+  }
+  
+  .voter-login-title {
+	font-size: 1.5rem;
+	font-weight: bold;
+	color: #0047ab;
+  }
+  
+  .voter-login-subtitle {
+	margin-bottom: 20px;
+	color: #666;
+  }
+  
+  .voter-login-form {
+	display: flex;
+	flex-direction: column;
+  }
+  
+  .form-group {
+	position: relative;
+	margin-bottom: 15px;
+  }
+  
+  .form-group input {
+	width: 100%;
+	padding: 10px 10px 10px 35px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+  }
+  
+  .icon-user,
+  .icon-lock {
+	position: absolute;
+	left: 10px;
+	top: 50%;
+	transform: translateY(-50%);
+  }
+  
+  .btn-submit {
+	background-color: #0047ab;
+	color: #fff;
+	border: none;
+	padding: 10px;
+	border-radius: 5px;
+	cursor: pointer;
+  }
+  
+  .btn-submit:hover {
+	background-color: #003a94;
+  }
+  
+  .forgot-password-link {
+	display: block;
+	margin-top: 15px;
+	color: #0047ab;
+	text-decoration: none;
+  }
+  
+  .forgot-password-link:hover {
+	text-decoration: underline;
+  }  

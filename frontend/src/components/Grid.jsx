@@ -3,7 +3,7 @@ import Card from './Card';
 
 const Grid = () => {
 	const items = [
-		{ title: 'Login to Vote', icon: '📝' },
+		{ title: 'Login to Vote', icon: '📝', link: '/voter-login'},
 		{ title: 'How to vote by mail', icon: '📬' },
 		{ title: 'Election Results', icon: '📊' },
 		{ title: 'What’s on the Ballot', icon: '🗳️' },
@@ -15,11 +15,11 @@ const Grid = () => {
 
 	return (
 		<div style={gridStyles}>
-		{items.map((item, index) => (
-			<Card key={index} title={item.title} icon={item.icon} />
-		))}
+		  {items.map((item, index) => (
+			<Card key={index} title={item.title} icon={item.icon} link={item.link} />
+		  ))}
 		</div>
-	);
+	  );
 };
 
 const gridStyles = {

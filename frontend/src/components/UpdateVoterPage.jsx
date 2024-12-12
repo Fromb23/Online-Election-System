@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { Circles } from 'react-loader-spinner';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchVoter, updateVoter, clearError } from '../redux/slices/voterSlices';
+import { fetchVoter, updateVoter, clearError } from '../redux/actions/voterActions';
+import '../styles/UpdateVoterPage.css';
 
 const UpdateVoterPage = () => {
 	const { voterId } = useParams();
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
-	const voter = useSelector((state) => state.voters.list.find((v) => v.id === voterId));
-	const { isLoading, error } = useSelector((state) => state.voters);
+	const { loading, error, list, voter } = useSelector((state) => state.voters);
+	console.log(voter);
 
 	const [fullName, setFullName] = useState('');
 	const [constituency, setConstituency] = useState('');
@@ -17,18 +19,18 @@ const UpdateVoterPage = () => {
 
 	// Fetch voter details when the page loads
 	useEffect(() => {
-		if (!voter) {
+		if (voterId) {
 			dispatch(fetchVoter(voterId));
 		}
-	}, [voter, voterId, dispatch]);
+	}, [voterId, dispatch]);
 
 	console.log("Inspecting handle submit");
-	const handleSubmit = async (e) => {
+	async function handleSubmit(e) {
 		console.log('Form submitted');
 		e.preventDefault();
 
 		// Prepare the updated voter data
-		const updateVoter = {
+		const updatedVoter = {
 			fullName,
 			constituency,
 			voted,
@@ -36,7 +38,7 @@ const UpdateVoterPage = () => {
 
 		try {
 			// Dispatch the updateVoter action and wait for it to complete
-			const resultAction = await dispatch(updateVoter({ voterId, voterData: updateVoter }));
+			const resultAction = await dispatch(updateVoter({ voterId, voterData: updatedVoter }));
 
 			// Check if the update was successful
 			if (updateVoter.fulfilled.match(resultAction)) {
@@ -49,7 +51,7 @@ const UpdateVoterPage = () => {
 			}
 		} catch (error) {
 			// Handle unexpected errors
-			console.error('Error updating voter:', error);
+			console.log(error);
 			alert('Error updating voter');
 		}
 	};
@@ -61,14 +63,10 @@ const UpdateVoterPage = () => {
 			dispatch(clearError());
 		}
 
-		if (isLoading && !error) {
-			alert('Voter details updated successfully');
-			navigate.push('/voters');
-		}
-	}, [isLoading, error, dispatch, navigate]);
+	}, [error, dispatch, navigate]);
 
 
-	console.log("Moments before return");
+	console.log(voter);
 	return (
 		<div>
 		<h2>Update Voter Details</h2>
@@ -107,13 +105,20 @@ const UpdateVoterPage = () => {
 			</select>
 			</div>
 			<div>
-			<button type="submit" disabled={isLoading}>
-			{isLoading ? 'Updating...' : 'Update Voter'}
+			<button type="submit" disabled={loading}>
+			{loading ? 'Updating...' : 'Update Voter'}
 			</button>
 			</div>
 			</form>
 		) : (
-			<p>Loading voter details...</p>
+			<div className="spinner">
+				<Circles
+    height="40"
+    width="40"
+    color="#333" // Match your theme
+    ariaLabel="loading-spinner"
+  />
+			</div>
 		)}
 		</div>
 	);

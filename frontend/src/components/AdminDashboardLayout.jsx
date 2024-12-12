@@ -1,7 +1,7 @@
 import React from 'react';
-import Sidebar from '../components/Sidebar';
-import Breadcrumb from '../components/Breadcrumb';
-import AdminHeader from '../components/AdminHeader';
+import Sidebar from './Sidebar';
+import Breadcrumb from './Breadcrumb';
+import AdminHeader from './AdminHeader';
 import '../styles/admin.css';
 
 const AdminDashboardLayout = ({ children }) => {

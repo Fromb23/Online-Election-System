@@ -21,7 +21,7 @@ const AdminLogin = ({ setAdminName }) => {
 	};
 	useEffect(() => {
 		if (userInfo) {
-			navigate('/admin');
+			navigate('/admin/dashboard');
 		}
 	}, [userInfo, navigate]);
 
