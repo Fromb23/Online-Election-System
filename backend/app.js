@@ -6,6 +6,9 @@ const candidateRoutes = require('./routes/CandidateRoutes');
 const voteCategoryRoutes = require('./routes/VoteCategoryRoutes');
 const partyRoutes = require('./routes/PartyRoutes');
 const adminRoutes = require('./routes/AdminRoutes');
+const constituencyRoutes = require('./routes/ConstituencyRoutes');
+const countyRoutes = require('./routes/CountyRoutes');
+const pollingStationRoutes = require('./routes/PollingStationRoutes');
 const app = express();
 const setupSwagger = require('./config/swagger');
 const errorHandler = require('./middleware/errorHandler');
@@ -26,6 +29,9 @@ app.use('/api/candidates', candidateRoutes);
 app.use('/api/votecategories', voteCategoryRoutes);
 app.use('/api/parties', partyRoutes);
 app.use('/api/admins', adminRoutes);
+app.use('/api/constituencies', constituencyRoutes);
+app.use('/api/counties', countyRoutes);
+app.use('/api/pollingstations', pollingStationRoutes);
 
 // start server
 app.listen(PORT, async () => {
