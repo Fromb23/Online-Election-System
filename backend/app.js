@@ -1,4 +1,3 @@
-require('dotenv').config();
 const express = require('express');
 const sequelize = require('./config/db');
 const voterRoutes = require('./routes/VoterRoutes');
