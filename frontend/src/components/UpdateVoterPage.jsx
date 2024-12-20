@@ -3,6 +3,7 @@ import { Circles } from 'react-loader-spinner';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchVoter, updateVoter, clearError } from '../redux/actions/voterActions';
+// import { fetchCounties, fetchConstituencies, fetchPollingStations } from '../redux/actions/voterActions';
 import '../styles/UpdateVoterPage.css';
 
 const UpdateVoterPage = () => {
@@ -14,7 +15,10 @@ const UpdateVoterPage = () => {
 	console.log(voter);
 
 	const [fullName, setFullName] = useState('');
+	const [email, setEmail] = useState('');
+	const [county, setCounty] = useState('');
 	const [constituency, setConstituency] = useState('');
+	const [pollingStation, setPollingStation] = useState('');
 	const [voted, setVoted] = useState(false);
 
 	// Fetch voter details when the page loads
@@ -32,7 +36,10 @@ const UpdateVoterPage = () => {
 		// Prepare the updated voter data
 		const updatedVoter = {
 			fullName,
+			email,
+			county,
 			constituency,
+			pollingStation,
 			voted,
 		};
 
@@ -86,11 +93,36 @@ const UpdateVoterPage = () => {
 			/>
 			</div>
 			<div>
+				<label>Email:</label>
+				<input type='email' value = {email}
+				onChange={(e) => setEmail(e.target.value)}
+				required
+				/>
+			</div>
+			<div>
+			<label>County:</label>
+			<input
+			type="text"
+			value={county}
+			onChange={(e) => setCounty(e.target.value)}
+			required
+			/>
+			</div>
+			<div>
 			<label>Constituency:</label>
 			<input
 			type="text"
 			value={constituency}
 			onChange={(e) => setConstituency(e.target.value)}
+			required
+			/>
+			</div>
+			<div>
+			<label>Polling Station:</label>
+			<input
+			type="text"
+			value={pollingStation}
+			onChange={(e) => setPollingStation(e.target.value)}
 			required
 			/>
 			</div>

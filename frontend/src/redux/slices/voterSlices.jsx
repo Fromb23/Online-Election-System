@@ -1,13 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createVoter, updateVoter, fetchVoter, fetchVoters, deleteVoter } from '../actions/voterActions';
+import { fetchConstituencies, fetchPollingStations } from '../actions/voterActions';
 
 // Voter slice
 const voterSlice = createSlice({
 	name: 'voters',
 	initialState: {
+		county: [],
+		constituency: [],
+		pollingStation: [],
+  		constituencies: [],
+  		pollingStations: [],
 		list: [],
 		selectedVoter: null,
 		loading: false,
+		success: false,
 		error: null,
 		voter: null,
 	},

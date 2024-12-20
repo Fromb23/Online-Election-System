@@ -4,6 +4,7 @@ import voterReducer from './slices/voterSlices';
 import adminReducer from './slices/adminSlices';
 import dashboardSlice from './slices/dashboardSlices';
 import voterLoginSlice from './slices/voterLoginSlices';
+import locationSlice from './slices/locationSlices';
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
 	  admin: adminReducer,
 	  dashboard: dashboardSlice,
 	  voter: voterLoginSlice,
+	  location: locationSlice,
   },
 })
 

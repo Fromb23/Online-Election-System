@@ -1,18 +1,41 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loginVoter } from '../redux/actions/voterLoginActions';
+import { useNavigate } from 'react-router-dom';
 import '../styles/VoterLogin.css';
 
 const VoterLogin = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [voterId, setVoterId] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Dispatch the action with voter credentials
-    dispatch(loginVoter({ voterId, password, rememberMe }));
+
+    try {
+      // Dispatch the login action and wait for the response
+      const resultAction = await dispatch(loginVoter({ voterId, password, rememberMe }));
+      
+      // Check if the action was successful
+      if (loginVoter.fulfilled.match(resultAction)) {
+        const {is_first_login } = resultAction.payload;
+        localStorage.setItem('voterId', voterId);
+        if (is_first_login) {
+          // Redirect to the update password page if it's the first login
+          navigate(`/voters/update-password/${voterId}`);
+        } else {
+          // Otherwise, redirect to the voter dashboard
+          navigate('/voter-dashboard');
+        }
+      } else {
+        // Handle errors if the login failed (e.g., invalid credentials)
+        alert(resultAction.payload.message || 'Login failed');
+      }
+    } catch (error) {
+      alert('An error occurred during login');
+    }
   };
 
   return (
@@ -29,7 +52,6 @@ const VoterLogin = () => {
               onChange={(e) => setVoterId(e.target.value)}
               required
             />
-            <span className="icon-user" />
           </div>
           <div className="form-group">
             <input
@@ -39,7 +61,6 @@ const VoterLogin = () => {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-            <span className="icon-lock" />
           </div>
           <div className="form-options">
             <label>
@@ -55,9 +76,6 @@ const VoterLogin = () => {
             Sign In
           </button>
         </form>
-        <a href="/forgot-password" className="forgot-password-link">
-          I forgot my password
-        </a>
       </div>
     </div>
   );

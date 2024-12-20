@@ -35,8 +35,27 @@ const VoterComponent = () => {
 		<h2>Voters Management</h2>
 		<p>Registered Voters: <strong>{voters.length}</strong></p>
 
+		<div>
+		<button
+		onClick={handleCreate}
+		style={{
+			padding: '10px 15px',
+				backgroundColor: '#008CBA',
+				color: 'white',
+				border: 'none',
+				borderRadius: '5px',
+				cursor: 'pointer',
+				float: 'right',
+				marginBottom: '10px'
+		}}
+		>
+		Create New Voter
+		</button>
+		</div>
+
 		{voters.length === 0 ? (
 			<p>No voters found.</p>
+		
 		) : (
 			<table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '20px' }}>
 			<thead>
@@ -84,23 +103,6 @@ const VoterComponent = () => {
 			</tbody>
 			</table>
 		)}
-
-		<div>
-		<h3>Actions</h3>
-		<button
-		onClick={handleCreate}
-		style={{
-			padding: '10px 15px',
-				backgroundColor: '#008CBA',
-				color: 'white',
-				border: 'none',
-				borderRadius: '5px',
-				cursor: 'pointer'
-		}}
-		>
-		Create New Voter
-		</button>
-		</div>
 
 		{selectedVoter && (
 			<div style={{ marginTop: '20px' }}>

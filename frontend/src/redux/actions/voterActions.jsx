@@ -88,6 +88,55 @@ export const fetchVoters = createAsyncThunk(
 	}
 );
 
+export const fetchCounties = createAsyncThunk(
+	'location/fetchCounties',
+	async (_, { rejectWithValue }) => {
+		try {
+			const res = await api.get('/counties');
+			return res.data;
+		} catch (error) {
+			return rejectWithValue(
+				error.res && error.res.data.message
+				? error.res.data.message
+				: error.message
+			);
+		}
+	}
+);
+
+export const fetchConstituencies = createAsyncThunk(
+	'location/fetchConstituencies',
+	async (countyId, { rejectWithValue }) => {
+		try {
+			const res = await api.get(`/constituencies/${countyId}`);
+			console.log(res.data);
+			return res.data;
+		} catch (error) {
+			return rejectWithValue(
+				error.res && error.res.data.message
+				? error.res.data.message
+				: error.message
+			);
+		}
+	}
+);
+
+export const fetchPollingStations = createAsyncThunk(
+	'location/fetchPollingStations',
+	async (constituencyId, { rejectWithValue }) => {
+		try {
+			const res = await api.get(`/pollingStations/${constituencyId}`);
+			return res.data;
+		} catch (error) {
+			return rejectWithValue(
+				error.res && error.res.data.message
+				? error.res.data.message
+				: error.message
+			);
+		}
+	}
+);
+
 // Action to clear errors
 export const clearError = () => (dispatch) => {
 	dispatch(clearErrorAction());

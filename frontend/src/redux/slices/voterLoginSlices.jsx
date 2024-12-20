@@ -9,6 +9,7 @@ const voterLoginSlice = createSlice({
 	error: null }, reducers: {
     logoutVoter: (state) => {
       state.voterInfo = null;
+      localStorage.removeItem('voterInfo');
     },
   },
   extraReducers: (builder) => {
@@ -20,6 +21,8 @@ const voterLoginSlice = createSlice({
       .addCase(loginVoter.fulfilled, (state, action) => {
         state.loading = false;
         state.voterInfo = action.payload;
+        console.log(state.voterInfo);
+        localStorage.setItem('voterInfo', JSON.stringify(action.payload));
       })
       .addCase(loginVoter.rejected, (state, action) => {
         state.loading = false;

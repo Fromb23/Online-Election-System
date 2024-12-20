@@ -14,8 +14,11 @@ import AdminDashboardLayout from './components/AdminDashboardLayout';
 import { useSelector } from 'react-redux';
 import './App.css';
 import Dashboard from './pages/Dashboard';
+import VoterLoginDashboard from './pages/voterLoginDashboard';
+import CandidateList from "./pages/CandidateList";
+import UpdatePassword from './pages/UpdatePassword';
 
-const AuthLayout = () => {
+const AuthAdminLayout = () => {
 	const { userInfo } = useSelector((state) => state.user);
 	if (!userInfo) {
 		return <Navigate to='/admin/login' />;
@@ -26,12 +29,24 @@ const AuthLayout = () => {
 		</AdminDashboardLayout>
 	)
 };
+
+const AuthVoterLayout = () => {
+    const { voterInfo } = useSelector((state) => state.voter);
+    if (!voterInfo) {
+        return <Navigate to='/voter-login' />;
+    }
+    return (
+        <VoterLoginDashboard>
+            <Outlet />
+        </VoterLoginDashboard>
+    )
+}
 function App() {
     return (
         <Router>
             <Routes>
                 {/* Admin Routes */}
-	    <Route element={<AuthLayout />}
+	    <Route element={<AuthAdminLayout />}
 	    >
 	    <Route path="/admin/voters" element ={<VoterComponent />} />
         <Route path="/admin/dashboard" element={<Dashboard />} />
@@ -46,6 +61,12 @@ function App() {
                 path="/admin/create"
                 element={<CreateAdmin />}
                 />
+                {/* Voter Routes */}
+                <Route element={<AuthVoterLayout />}>
+                <Route path="/voter-dashboard" element={<VoterLoginDashboard />} />
+                <Route path="/categories/:categoryId" element={<CandidateList />} />
+                <Route path="/voters/update-password/:voterId" element={<UpdatePassword />} />
+                </Route>
                 <Route path="/voter-login" element={<VoterLogin />} />
 
                 {/* Main Site Routes */}
