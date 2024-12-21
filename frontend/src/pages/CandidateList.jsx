@@ -4,7 +4,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 const CandidateList = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { category } = location.state;
+  const { category } = location.state?.category || {};
+
+  if (!category) {
+    console.error("Category data is missing.");
+  }
 
   const candidates = [
     { id: 1, name: "Candidate A", description: "Details about Candidate A" },

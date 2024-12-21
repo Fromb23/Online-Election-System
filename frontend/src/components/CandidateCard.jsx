@@ -5,6 +5,7 @@ const CandidateCard = ({ category }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
+    console.log("Clicked on category", category);
     navigate(`/categories/${category.id}`, { state: { category } });
   };
 

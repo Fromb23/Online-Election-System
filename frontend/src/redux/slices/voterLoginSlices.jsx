@@ -1,10 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { loginVoter } from '../actions/voterLoginActions';
 
+const persistedVoterInfo = localStorage.getItem('voterInfo')
+? JSON.parse(localStorage.getItem('voterInfo'))
+: null;
+
 const voterLoginSlice = createSlice({
   name: 'voter',
   initialState: { 
-	voterInfo: null,
+	voterInfo: persistedVoterInfo,
 	loading: false,
 	error: null }, reducers: {
     logoutVoter: (state) => {

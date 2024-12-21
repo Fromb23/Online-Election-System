@@ -1,9 +1,22 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import VoterLoginHeader from '../components/voterLoginHeader';
 import VoterLoginFooter from '../components/voterLoginFooter';
 import '../styles/VoterDashboard.css';
 import CandidateCard from "../components/CandidateCard";
+import { useSelector } from 'react-redux';
+
+const VoterLoginDashboard = () => {
+  const navigate = useNavigate();
+  const voterInfo = useSelector((state) => state.voter.voterInfo);
+
+  useEffect(() => {
+    if (!voterInfo) {
+      navigate("/voter-login");
+    } else {
+      console.log("Fetching voter data...", voterInfo);
+    }
+  }, [voterInfo, navigate]);
 
 const categories = [
   { id: 1, name: "President", description: "Vote for the President" },
@@ -11,12 +24,11 @@ const categories = [
   // Add more categories as needed
 ];
 
-const VoterLoginDashboard = () => {
   return (
     <div className="voter-dashboard">
       <VoterLoginHeader />
       <main style={styles.main}>
-        <h2>Categories</h2>
+        <h2>Voting Categories</h2>
         <div style={styles.cards}>
           {categories.map((category) => (
             <CandidateCard key={category.id} category={category} />
