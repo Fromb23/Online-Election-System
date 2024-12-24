@@ -6,10 +6,18 @@ const router = express.Router();
 // Create a new party
 router.post('/', async (req, res) => {
 	try {
+		console.log("Request body:", req.body);
+
 		const { partyName } = req.body;
+
+		if (!partyName) {
+			return res.status(400).json({ error: "Party name is required" });
+		  }
+		
 		const newParty = await Party.create({ partyName });
 		res.status(201).json(newParty);
 	} catch (err) {
+		console.log(err);
 		res.status(500).json({ error: err.message });
 	}
 });
@@ -53,6 +61,7 @@ router.put('/:partyId', async (req, res) => {
 // Delete a party
 router.delete('/:partyId', async (req, res) => {
 	try {
+		console.log("Request body:", req.body);
 		const { partyId } = req.params;
 		const delName = await Party.findByPk(partyId);
 		if (!delName) return res.status(401).json({ error: "party not found" });

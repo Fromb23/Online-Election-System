@@ -14,11 +14,22 @@ router.post('/', async (req, res) => {
 	}
 });
 
-// Get a vote category
+// Get all vote categories
 router.get('/', async (req, res) => {
 	try {
 		const voteCategories = await VoteCategory.findAll();
-		res.status(201).json(voteCategories);
+		res.status(200).json(voteCategories);
+	} catch (err) {
+		res.status(500).json({ error: err.message });
+	}
+});
+
+// Get a vote category by id
+router.get('/:id', async (req, res) => {
+	try {
+		const voteCategories = await VoteCategory.findByPk(req.params.id);
+		if (!voteCategories) return res.status(401).json({ error: "Vote Category not found" });
+		res.status(200).json(voteCategories);
 	} catch (err) {
 		res.status(500).json({ error: err.messge });
 	}
@@ -27,6 +38,7 @@ router.get('/', async (req, res) => {
 // update a vote category
 router.put('/:id', async (req, res) => {
 	try {
+		console.log("Request body:", req.body);
 		const { id } = req.params;
 		const { name } = req.body;
 		const updatedName = await VoteCategory.findByPk(id);
