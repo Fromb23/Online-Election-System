@@ -40,8 +40,11 @@ Vote.belongsTo(Candidate);
 Voter.hasMany(Vote);
 Candidate.hasMany(Vote);
 
-Candidate.belongsTo(Party, { foreignKey: 'PartyId' });
-Party.hasMany(Candidate, { foreignKey: 'PartyId' });
+Candidate.belongsTo(Party, { foreignKey: 'PartyId', as: 'party' });
+Party.hasMany(Candidate, { foreignKey: 'PartyId', as: 'candidates' });
+Candidate.belongsTo(VoteCategory, { foreignKey: 'voteCategoryId', as: 'voteCategory' });
+VoteCategory.hasMany(Candidate, { foreignKey: 'voteCategoryId', as: 'candidates' });
+
 
 County.hasMany(Constituency, {
 	foreignKey: 'countyId',
