@@ -18,7 +18,7 @@ export const store = configureStore({
 	  voter: voterLoginSlice,
 	  location: locationSlice,
 	  voteCategory: voteCategorySlice,
-	  createCandidate: createCandidateSlice,
+	  candidate: createCandidateSlice,
 	  party: createPartySlice,
   },
 })

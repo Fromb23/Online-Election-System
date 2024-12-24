@@ -4,7 +4,7 @@ import Header from './components/Header';
 import VoterComponent from './components/VoterComponent';
 import UpdateVoterPage from './components/UpdateVoterPage';
 import CreateVoter from './components/CreateVoter';
-import CreateCandidate from './components/CreateCandidate';
+import CreateCandidate from './components/CandidateManagement';
 import PartyManagement from './components/PartyManagement';
 import VoteCategory from './components/VoteCategory';
 import AdminLogin from './pages/AdminLogin';
