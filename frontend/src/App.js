@@ -4,6 +4,9 @@ import Header from './components/Header';
 import VoterComponent from './components/VoterComponent';
 import UpdateVoterPage from './components/UpdateVoterPage';
 import CreateVoter from './components/CreateVoter';
+import CreateCandidate from './components/CreateCandidate';
+import PartyManagement from './components/PartyManagement';
+import VoteCategory from './components/VoteCategory';
 import AdminLogin from './pages/AdminLogin';
 import CreateAdmin from './pages/CreateAdmin';
 import VoterLogin from './pages/VoterLogin';
@@ -36,38 +39,37 @@ const AuthVoterLayout = () => {
         return <Navigate to='/voter-login' />;
     }
     return (
-        <VoterLoginDashboard>
-            <Outlet />
-        </VoterLoginDashboard>
+        <div>
+                <Outlet />
+        </div>
     )
 }
 function App() {
     return (
         <Router>
             <Routes>
-                {/* Admin Routes */}
+        {/* Admin Routes */}
 	    <Route element={<AuthAdminLayout />}
 	    >
 	    <Route path="/admin/voters" element ={<VoterComponent />} />
         <Route path="/admin/dashboard" element={<Dashboard />} />
 	    <Route path="/admin/voters/update/:voterId" element={<UpdateVoterPage />} />
         <Route path="voters/create" element={<CreateVoter />} />
+        <Route path="admin/candidates" element={<CreateCandidate />} />
+        <Route path="admin/parties" element={<PartyManagement />} />
+        <Route path="admin/vote-categories" element={<VoteCategory />} />
 	    </Route>
-                <Route
-                    path="/admin/login"
-                    element={<AdminLogin />}
-                />
-                <Route 
-                path="/admin/create"
-                element={<CreateAdmin />}
-                />
-                {/* Voter Routes */}
-                <Route element={<AuthVoterLayout />}>
-                <Route path="/voter-dashboard" element={<VoterLoginDashboard />} />
-                <Route path="/categories/:categoryId" element={<CandidateList />} />
-                <Route path="/voters/update-password/:voterId" element={<UpdatePassword />} />
-                </Route>
-                <Route path="/voter-login" element={<VoterLogin />} />
+        
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/create" element={<CreateAdmin />} />
+                
+        {/* Voter Routes */}
+        <Route element={<AuthVoterLayout />}>
+        <Route path="/voter-dashboard" element={<VoterLoginDashboard />} />
+        <Route path="/categories/:categoryId" element={<CandidateList />} />
+        <Route path="/voters/update-password/:voterId" element={<UpdatePassword />} />
+        </Route>
+        <Route path="/voter-login" element={<VoterLogin />} />
 
                 {/* Main Site Routes */}
                 <Route

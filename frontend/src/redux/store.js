@@ -5,6 +5,9 @@ import adminReducer from './slices/adminSlices';
 import dashboardSlice from './slices/dashboardSlices';
 import voterLoginSlice from './slices/voterLoginSlices';
 import locationSlice from './slices/locationSlices';
+import voteCategorySlice from './slices/voteCategorySlices';
+import createCandidateSlice from './slices/createCandidateSlices';
+import createPartySlice from './slices/createPartySlices';
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +17,9 @@ export const store = configureStore({
 	  dashboard: dashboardSlice,
 	  voter: voterLoginSlice,
 	  location: locationSlice,
+	  voteCategory: voteCategorySlice,
+	  createCandidate: createCandidateSlice,
+	  party: createPartySlice,
   },
 })
 

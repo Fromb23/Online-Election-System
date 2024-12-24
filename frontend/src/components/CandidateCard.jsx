@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const CandidateCard = ({ category }) => {
+  console.log("Category data in candidate card", category);
   const navigate = useNavigate();
 
   const handleClick = () => {

@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createVoter, updateVoter, fetchVoter, fetchVoters, deleteVoter } from '../actions/voterActions';
-import { fetchConstituencies, fetchPollingStations } from '../actions/voterActions';
 
 // Voter slice
 const voterSlice = createSlice({

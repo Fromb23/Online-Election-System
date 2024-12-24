@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutVoter } from "../redux/slices/voterLoginSlices";
 import "../styles/VoterLoginHeader.css";
@@ -9,7 +9,6 @@ const VoterLoginHeader = () => {
   const dispatch = useDispatch();
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null); // Ref for the dropdown menu
-  const navigate = useNavigate();
 
   const handleProfileClick = (e) => {
     // Prevent click event from closing dropdown when clicking inside

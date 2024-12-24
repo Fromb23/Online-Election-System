@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import VoterLoginHeader from '../components/voterLoginHeader';
 import VoterLoginFooter from '../components/voterLoginFooter';
 import '../styles/VoterDashboard.css';
