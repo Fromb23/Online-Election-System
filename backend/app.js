@@ -1,6 +1,7 @@
 const express = require('express');
 const sequelize = require('./config/db');
 const voterRoutes = require('./routes/VoterRoutes');
+const VoteRoutes = require('./routes/VotesRoutes');
 const candidateRoutes = require('./routes/CandidateRoutes');
 const voteCategoryRoutes = require('./routes/VoteCategoryRoutes');
 const partyRoutes = require('./routes/PartyRoutes');
@@ -31,6 +32,7 @@ app.use('/api/admins', adminRoutes);
 app.use('/api/constituencies', constituencyRoutes);
 app.use('/api/counties', countyRoutes);
 app.use('/api/pollingstations', pollingStationRoutes);
+app.use('/api/votes', require('./routes/VotesRoutes'));
 
 // start server
 app.listen(PORT, async () => {

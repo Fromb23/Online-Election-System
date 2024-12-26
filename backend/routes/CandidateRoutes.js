@@ -1,5 +1,5 @@
 const express = require('express');
-const { VoteCategory, Party,Candidate } = require('../models');
+const { VoteCategory, Party, Candidate } = require('../models');
 
 router = express.Router();
 
@@ -83,6 +83,46 @@ router.get('/:candidateId', async (req, res) => {
 		res.status(500).json({ error: err.message });
 	}
 });
+
+// Backend route to fetch candidates by category name
+router.get('/candidateCategory/:voteCategoryName', async (req, res) => {
+	// Extract voteCategoryName from URL parameters
+	const { voteCategoryName } = req.params;
+	console.log("Received voteCategoryName: ", voteCategoryName);
+  
+	try {
+	  // Find the category by its name and retrieve the voteCategoryId
+	  const category = await VoteCategory.findOne({
+		where: { name: voteCategoryName },
+	  });
+  
+	  // If the category does not exist, return an error
+	  if (!category) {
+		console.log("Category not found: ", voteCategoryName);
+		return res.status(404).json({ error: 'Category not found' });
+	  }
+  
+	  // Retrieve the voteCategoryId
+	  const voteCategoryId = category.voteCategoryId;
+	  console.log("Found category ID: ", voteCategoryId);
+  
+	  // Find all candidates in this voteCategoryId
+	  const candidates = await Candidate.findAll({
+		where: { voteCategoryId: voteCategoryId },
+	  });
+  
+	  // If no candidates are found, return a message
+	  if (!candidates || candidates.length === 0) {
+		return res.status(404).json({ error: 'No candidates found for this category' });
+	  }
+  
+	  // Return the list of candidates
+	  res.json(candidates);
+	} catch (error) {
+	  console.error("Error fetching candidates: ", error);
+	  res.status(500).json({ error: 'Internal server error' });
+	}
+  });
 
 // Update a candidate
 router.put('/:candidateId', async (req, res) => {
