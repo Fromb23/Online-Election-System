@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../../services/api";
 
 // Thunks for async actions
-export const fetchVoteCategorY = createAsyncThunk(
+export const fetchVoteCategory = createAsyncThunk(
   "voteCategory/fetchVoteCategory",
   async (id, { rejectWithValue }) => {
     try {

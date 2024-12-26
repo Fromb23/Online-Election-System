@@ -45,7 +45,7 @@ const CandidateManagement = () => {
 
   const resetForm = () => {
     setCandidateName("");
-    setPartyName(""); // Reset partyName
+    setPartyName("");
     setCategory("");
     setEditingCandidate(null);
     setIsDelete(false);

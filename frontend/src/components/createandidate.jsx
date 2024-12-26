@@ -1,76 +1,94 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchCandidateById, updateCandidate } from "../redux/actions/candidateActions";
-import { useParams, useHistory } from "react-router-dom";
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  setCandidateName,
+  setPartyId,
+  setVoteCategoryId,
+  clearMessages,
+} from '../redux/slices/createCandidateSlices';
+import { createCandidate, fetchPartiesAndCategories } from '../redux/actions/createCandidateActions';
 
-const UpdateCandidate = () => {
+const CreateCandidate = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
-  const { candidateId } = useParams();
-  const { candidate, loading, error } = useSelector((state) => state.candidate);
-  const [candidateName, setCandidateName] = useState("");
-  const [party, setParty] = useState("");
-  const [category, setCategory] = useState("");
+  const {
+    candidateName,
+    partyId,
+    voteCategoryId,
+    parties,
+    voteCategories,
+    error,
+    success,
+    loading,
+  } = useSelector((state) => state.createCandidate);
 
   useEffect(() => {
-    dispatch(fetchCandidateById(candidateId));
-  }, [dispatch, candidateId]);
+    dispatch(fetchPartiesAndCategories());
+  }, [dispatch]);
 
-  useEffect(() => {
-    if (candidate) {
-      setCandidateName(candidate.name);
-      setParty(candidate.party);
-      setCategory(candidate.category);
-    }
-  }, [candidate]);
-
-  const handleUpdateCandidate = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!candidateName.trim() || !party.trim() || !category.trim()) {
-      alert("All fields are required.");
-      return;
-    }
-
-    const updatedCandidateData = { name: candidateName, party, category };
-    dispatch(updateCandidate({ id: candidateId, candidate: updatedCandidateData }))
-      .then(() => {
-        alert("Candidate updated successfully!");
-        history.push("/manage-candidates"); // Navigate back to the list page
-      })
-      .catch((err) => console.error(err));
+    dispatch(clearMessages());
+    const newCandidate = {
+      candidateName,
+      PartyId: partyId,
+      voteCategoryId,
+    };
+    dispatch(createCandidate(newCandidate));
   };
 
-  if (loading) return <p>Loading...</p>;
-
   return (
-    <div>
-      <h1>Update Candidate</h1>
-      {error && <p className="error">Error: {error}</p>}
-
-      <form onSubmit={handleUpdateCandidate}>
-        <input
-          type="text"
-          placeholder="Candidate Name"
-          value={candidateName}
-          onChange={(e) => setCandidateName(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Party"
-          value={party}
-          onChange={(e) => setParty(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Category"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        />
-        <button type="submit">Update Candidate</button>
+    <div className="create-candidate">
+      <h1>Create Candidate</h1>
+      {loading && <div>Loading...</div>}
+      {error && <div className="error">{error}</div>}
+      {success && <div className="success">{success}</div>}
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="candidateName">Candidate Name:</label>
+          <input
+            type="text"
+            id="candidateName"
+            value={candidateName}
+            onChange={(e) => dispatch(setCandidateName(e.target.value))}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="partyId">Party:</label>
+          <select
+            id="partyId"
+            value={partyId}
+            onChange={(e) => dispatch(setPartyId(e.target.value))}
+            required
+          >
+            <option value="">Select a Party</option>
+            {parties.map((party) => (
+              <option key={party.partyId} value={party.partyId}>
+                {party.partyName}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="form-group">
+          <label htmlFor="voteCategoryId">Vote Category:</label>
+          <select
+            id="voteCategoryId"
+            value={voteCategoryId}
+            onChange={(e) => dispatch(setVoteCategoryId(e.target.value))}
+            required
+          >
+            <option value="">Select a Vote Category</option>
+            {voteCategories.map((category) => (
+              <option key={category.voteCategoryId} value={category.voteCategoryId}>
+                {category.categoryName}
+              </option>
+            ))}
+          </select>
+        </div>
+        <button type="submit">Create Candidate</button>
       </form>
     </div>
   );
 };
 
-export default UpdateCandidate;
+export default CreateCandidate;

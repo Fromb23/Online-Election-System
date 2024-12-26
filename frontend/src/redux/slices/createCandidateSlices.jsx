@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchCandidates, createCandidate, fetchPartiesAndCategories } from '../actions/createCandidateActions';
+import { createCandidate, fetchPartiesAndCategories, fetchCandidateCategories, fetchCandidates } from '../actions/createCandidateActions';
 
 const initialState = {
   candidates: [],
   candidateName: '',
-  partyId: '',                // This will store the selected party ID
-  voteCategoryId: '',         // This will store the selected vote category ID
-  parties: [],                // Store parties with their IDs
-  voteCategories: [],         // Store vote categories with their IDs
+  partyId: '',                
+  voteCategoryId: '',        
+  parties: [], 
+  voteCategories: [],         
   error: null,
   success: null,
   loading: false,
@@ -15,7 +15,7 @@ const initialState = {
 
 // Slice for creating a candidate
 const createCandidateSlice = createSlice({
-  name: 'candidates',
+  name: 'candidate',
   initialState,
   reducers: {
     setCandidateName: (state, action) => {
@@ -34,18 +34,19 @@ const createCandidateSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-    // Handle fetching Candidates
-    .addCase(fetchCandidates.pending, (state) => {
-      state.loading = true;
-    })
-    .addCase(fetchCandidates.fulfilled, (state, action) => {
-      state.candidates = action.payload;
-      state.loading = false;
-    })
-    .addCase(fetchCandidates.rejected, (state, action) => {
-      state.error = action.payload;
-      state.loading = false;
-    })
+      // Handle fetching Candidates
+      .addCase(fetchCandidates.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchCandidates.fulfilled, (state, action) => {
+        state.candidates = action.payload;
+        state.loading = false;
+      })
+      .addCase(fetchCandidates.rejected, (state, action) => {
+        state.error = action.payload;
+        state.loading = false;
+      })
+
       // Handling fetchPartiesAndCategories action
       .addCase(fetchPartiesAndCategories.pending, (state) => {
         state.loading = true;
@@ -56,6 +57,22 @@ const createCandidateSlice = createSlice({
         state.loading = false;
       })
       .addCase(fetchPartiesAndCategories.rejected, (state, action) => {
+        state.error = action.payload;
+        state.loading = false;
+      })
+
+      // Handling fetchCandidateCategories action
+      .addCase(fetchCandidateCategories.pending, (state) => {
+        console.log("Fetching candidates by category...");
+        state.loading = true;
+      })
+      .addCase(fetchCandidateCategories.fulfilled, (state, action) => {
+        console.log("Candidates fetched by category staate:", action.payload);
+        // Update candidates based on the selected category
+        state.candidates = action.payload;  // Assuming `action.payload` contains candidates
+        state.loading = false;
+      })
+      .addCase(fetchCandidateCategories.rejected, (state, action) => {
         state.error = action.payload;
         state.loading = false;
       })

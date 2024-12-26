@@ -1,14 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { fetchCandidateCategories } from '../redux/actions/createCandidateActions';
 import VoterLoginHeader from '../components/voterLoginHeader';
 import VoterLoginFooter from '../components/voterLoginFooter';
 import '../styles/VoterDashboard.css';
 import CandidateCard from "../components/CandidateCard";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 const VoterLoginDashboard = () => {
+  const dispatch = useDispatch();
+  const[selectedCategory, setSelectedCategory] = useState(null);
   const navigate = useNavigate();
   const voterInfo = useSelector((state) => state.voter.voterInfo);
+  const { loading, candidate, error } = useSelector((state) => state.candidate);
 
   useEffect(() => {
     if (!voterInfo) {
@@ -21,8 +25,15 @@ const VoterLoginDashboard = () => {
 const categories = [
   { id: 1, name: "President", description: "Vote for the President" },
   { id: 2, name: "Governor", description: "Vote for the Governor" },
+  { id: 3, name: "Member of Paliament", description: "Vote for your MP"},
+  { id: 4, name: "MCA", description: "Vote for the MCA"},
   // Add more categories as needed
 ];
+
+const handleClickCategory = (category) => {
+  setSelectedCategory(category.name);
+  dispatch(fetchCandidateCategories(category.name));
+}
 
   return (
     <div className="voter-dashboard">
@@ -30,10 +41,28 @@ const categories = [
       <main style={styles.main}>
         <h2>Voting Categories</h2>
         <div style={styles.cards}>
-          {categories.map((category) => (
-            <CandidateCard key={category.id} category={category} />
-          ))}
+        {categories.map((category) => (
+  <div 
+    key={category.id} 
+    className="category-card" 
+    onClick={() => handleClickCategory(category)}
+  >
+    <CandidateCard category={category} />
+  </div>
+))}
         </div>
+        {loading && <p>Loading candidates...</p>}
+        {error && <p style={{ color: "red" }}>{error}</p>}
+        {candidate && (
+          <div>
+            <h2>Candidates for {selectedCategory}</h2>
+            <div style={styles.cards}>
+              {candidate.map((candidate) => (
+                <CandidateCard key={candidate.candidateId} candidate={candidate} />
+              ))}
+            </div>
+          </div>
+        )}
       </main>
       <VoterLoginFooter />
     </div>

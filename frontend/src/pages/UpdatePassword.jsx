@@ -29,7 +29,7 @@ const UpdatePassword = () => {
 
       if (response.status === 200) {
         // If successful, redirect to the dashboard
-        navigate('/voterDashboard');
+        navigate('/voter-login');
       } else {
         // Handle any error returned by the API
         setErrorMessage(data.error || 'Error updating password');

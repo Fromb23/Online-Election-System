@@ -102,3 +102,21 @@ export const fetchCandidates = createAsyncThunk(
     }
   }
 );
+
+// Async thunk to fetch candidates by category
+export const fetchCandidateCategories = createAsyncThunk(
+  'candidate/fetchCandidateCategories',
+  async (name, { rejectWithValue }) => {
+    try {
+      console.log("Fetching candidates by category frontend by name", name);
+      
+      // Update the API request to pass the category name in the URL path
+      const response = await api.get(`/candidates/candidateCategory/${name}`);
+      
+      return response.data;
+    } catch (err) {
+      console.log("Error fetching candidates by category: ", err);
+      return rejectWithValue(err.message);
+    }
+  }
+);
