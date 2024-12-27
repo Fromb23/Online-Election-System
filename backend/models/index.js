@@ -27,24 +27,24 @@ const County = require('./county');
 const Constituency = require('./constituency');
 const PollingStation = require('./pollingStation');
 
-// Defone associations
-Voter.belongsToMany(Candidate, { through: Vote });
-Candidate.belongsToMany(Voter, { through: Vote });
+// Defined associations
+// Associations between Voter and Vote
+Voter.hasMany(Vote, { foreignKey: 'voterId', as: 'votes' });
+Vote.belongsTo(Voter, { foreignKey: 'voterId', as: 'voter' });
 
-VoteCategory.hasMany(Vote);
-Vote.belongsTo(VoteCategory);
+// Associations between Candidate and Vote
+Candidate.hasMany(Vote, { foreignKey: 'CandidateId', as: 'votes' });
+Vote.belongsTo(Candidate, { foreignKey: 'CandidateId', as: 'candidate' });
 
-Vote.belongsTo(Voter);
-Vote.belongsTo(Candidate);
+// Associations between VoteCategory and Vote
+VoteCategory.hasMany(Vote, { foreignKey: 'VoteCategoryId', as: 'votes' });
+Vote.belongsTo(VoteCategory, { foreignKey: 'VoteCategoryId', as: 'voteCategory' });
 
-Voter.hasMany(Vote);
-Candidate.hasMany(Vote);
 
 Candidate.belongsTo(Party, { foreignKey: 'PartyId', as: 'party' });
 Party.hasMany(Candidate, { foreignKey: 'PartyId', as: 'candidates' });
 Candidate.belongsTo(VoteCategory, { foreignKey: 'voteCategoryId', as: 'voteCategory' });
 VoteCategory.hasMany(Candidate, { foreignKey: 'voteCategoryId', as: 'candidates' });
-
 
 County.hasMany(Constituency, {
 	foreignKey: 'countyId',

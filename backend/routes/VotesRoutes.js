@@ -1,17 +1,16 @@
 const express = require("express");
 const router = express.Router();
-const { Vote } = require("../models");
+const { Vote, VoteCategory } = require("../models");
 
 // Get votes for a specific voter
 router.get("/", async (req, res) => {
-  const { voterId } = req.query;
 
-  if (!voterId) {
-    return res.status(400).json({ error: "Voter ID is required" });
-  }
+  //if (!voterId) {
+   // return res.status(400).json({ error: "Voter ID is required" });
+ // }
 
   try {
-    const votes = await Vote.findAll({ where: { VoterId: voterId } });
+    const votes = await Vote.findAll();
     res.status(200).json(votes);
   } catch (error) {
     console.error("Error fetching votes:", error);
@@ -21,19 +20,34 @@ router.get("/", async (req, res) => {
 
 // Save a new vote
 router.post("/", async (req, res) => {
-  const { voterId, candidateId, voteCategoryId } = req.body;
+  console.log("Request body votes post method:", req.body);
+  const { voterId, candidateId, voteCategoryName } = req.body;
 
-  if (!voterId || !candidateId || !voteCategoryId) {
+  // Validate request body
+  if (!voterId || !candidateId || !voteCategoryName) {
     return res.status(400).json({ error: "All fields are required." });
   }
 
   try {
+    // Find voteCategoryId by name
+    const voteCategory = await VoteCategory.findOne({
+      where: { name: voteCategoryName },
+    });
+
+    if (!voteCategory) {
+      return res.status(404).json({ error: "Vote category not found." });
+    }
+
+    const voteCategoryId = voteCategory.voteCategoryId;
+
+    // Create a new vote
     const vote = await Vote.create({
-      VoterId: voterId,
+      voterId: voterId,
       CandidateId: candidateId,
       VoteCategoryId: voteCategoryId,
       status: true,
     });
+
     res.status(201).json(vote);
   } catch (error) {
     console.error("Error saving vote:", error);
