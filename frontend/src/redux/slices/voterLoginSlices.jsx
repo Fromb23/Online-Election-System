@@ -9,11 +9,18 @@ const voterLoginSlice = createSlice({
   name: 'voter',
   initialState: { 
 	voterInfo: persistedVoterInfo,
+  votingStatus: null,
 	loading: false,
 	error: null }, reducers: {
     logoutVoter: (state) => {
       state.voterInfo = null;
       localStorage.removeItem('voterInfo');
+    },
+    setVotingStatus: (state, action) => {
+      state.votingStatus = action.payload;
+    },
+    setLoading: (state, action) => {
+      state.loading = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -35,5 +42,5 @@ const voterLoginSlice = createSlice({
   },
 });
 
-export const { logoutVoter } = voterLoginSlice.actions;
+export const { logoutVoter, setVotingStatus, setLoading } = voterLoginSlice.actions;
 export default voterLoginSlice.reducer;

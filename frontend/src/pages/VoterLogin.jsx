@@ -15,22 +15,18 @@ const VoterLogin = () => {
     e.preventDefault();
 
     try {
-      // Dispatch the login action and wait for the response
       const resultAction = await dispatch(loginVoter({ voterId, password, rememberMe }));
-      
-      // Check if the action was successful
+
       if (loginVoter.fulfilled.match(resultAction)) {
         const {is_first_login } = resultAction.payload;
         localStorage.setItem('voterId', voterId);
         if (is_first_login) {
-          // Redirect to the update password page if it's the first login
           navigate(`/voters/update-password/${voterId}`);
         } else {
-          // Otherwise, redirect to the voter dashboard
+          console.log("voterId set in localStorage:", voterId);
           navigate('/voter-dashboard');
         }
       } else {
-        // Handle errors if the login failed (e.g., invalid credentials)
         alert(resultAction.payload.message || 'Login failed');
       }
     } catch (error) {

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { submitVote } from "../redux/actions/createVoteActions";
 import { fetchCandidateCategories } from "../redux/actions/createCandidateActions";
 import "../styles/CandidateList.css";
 
@@ -10,7 +11,7 @@ const CandidateList = () => {
   const dispatch = useDispatch();
 
   const [votes, setVotes] = useState({});
-  const [isVoteConfirmed, setIsVoteConfirmed] = useState(false); // New state
+  const [isVoteConfirmed, setIsVoteConfirmed] = useState(false);
   const category = location.state?.category;
 
   const { loading, candidates, error } = useSelector((state) => state.candidate);
@@ -20,7 +21,6 @@ const CandidateList = () => {
       const savedData = JSON.parse(localStorage.getItem("votes")) || {};
       const voterId = localStorage.getItem("voterId") || generateUniqueId();
 
-      // Ensure a voterId exists in localStorage
       if (!localStorage.getItem("voterId")) {
         localStorage.setItem("voterId", voterId);
       }
@@ -31,7 +31,7 @@ const CandidateList = () => {
       };
 
       setVotes(categoryVotes);
-      setIsVoteConfirmed(categoryVotes.status === "voted"); // Update confirmation state
+      setIsVoteConfirmed(categoryVotes.status === "voted");
       dispatch(fetchCandidateCategories(category.name));
     }
   }, [category, dispatch]);
@@ -47,11 +47,10 @@ const CandidateList = () => {
     const updatedVotes = savedData.votes || {};
     const categoryVotes = updatedVotes[category.name] || { status: "not_voted", candidateId: null };
 
-    // Toggle candidate selection
     if (categoryVotes.candidateId === candidateId) {
-      categoryVotes.candidateId = null; // Deselect candidate
+      categoryVotes.candidateId = null;
     } else {
-      categoryVotes.candidateId = candidateId; // Select candidate
+      categoryVotes.candidateId = candidateId;
     }
 
     updatedVotes[category.name] = categoryVotes;
@@ -59,7 +58,7 @@ const CandidateList = () => {
     setVotes(categoryVotes);
   };
 
-  const handleConfirmVote = () => {
+  const handleConfirmVote = async () => {
     const savedData = JSON.parse(localStorage.getItem("votes")) || {};
     const voterId = localStorage.getItem("voterId");
 
@@ -70,16 +69,29 @@ const CandidateList = () => {
       return;
     }
 
-    // Update vote status to 'voted'
-    savedData.votes[category.name] = {
-      ...categoryVotes,
-      status: "voted",
-    };
+    try {
+      await dispatch(
+        submitVote({
+          voterId,
+          candidateId: categoryVotes.candidateId,
+          voteCategoryName: category.name,
+        })
+      );
 
-    localStorage.setItem("votes", JSON.stringify(savedData));
-    alert(`Your vote for ${category.name} has been recorded!`);
-    setIsVoteConfirmed(true); // Update state
-    //navigate("/voter-dashboard");
+      // Update vote status in local storage and state
+      savedData.votes[category.name] = {
+        ...categoryVotes,
+        status: "voted",
+      };
+
+      localStorage.setItem("votes", JSON.stringify(savedData));
+      setIsVoteConfirmed(true);
+
+      alert(`Your vote for ${category.name} has been recorded!`);
+    } catch (err) {
+      console.error("Failed to submit vote:", err);
+      alert("Failed to submit your vote. Please try again.");
+    }
   };
 
   const isVoted = (candidateId) => votes.candidateId === candidateId;
@@ -121,7 +133,7 @@ const CandidateList = () => {
                   <button
                     className={`vote-button ${isVoted(candidate.candidateId) ? "voted" : ""}`}
                     onClick={() => handleVoteToggle(candidate.candidateId)}
-                    disabled={votes.status === "voted" || isVoteConfirmed} // Disable when vote confirmed
+                    disabled={votes.status === "voted" || isVoteConfirmed}
                   >
                     {isVoted(candidate.candidateId) ? "Voted" : "Vote"}
                   </button>

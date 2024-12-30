@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchCandidateCategories } from '../redux/actions/createCandidateActions';
+import { setLoading } from '../redux/slices/voterLoginSlices';
 import VoterLoginHeader from '../components/voterLoginHeader';
 import VoterLoginFooter from '../components/voterLoginFooter';
+import VoterTracking from '../components/VoterTracking';
 import '../styles/VoterDashboard.css';
 import CandidateCard from "../components/CandidateCard";
 import { useSelector, useDispatch } from 'react-redux';
@@ -11,16 +13,32 @@ const VoterLoginDashboard = () => {
   const dispatch = useDispatch();
   const[selectedCategory, setSelectedCategory] = useState(null);
   const navigate = useNavigate();
-  const voterInfo = useSelector((state) => state.voter.voterInfo);
+  const voterId = localStorage.getItem('voterId')
   const { loading, candidate, error } = useSelector((state) => state.candidate);
+  const voterTrackingLoading = useSelector((state) => state.voterTracking.loading);
 
   useEffect(() => {
-    if (!voterInfo) {
+    if (!voterId) {
       navigate("/voter-login");
     } else {
-      console.log("Fetching voter data...", voterInfo);
+      console.log("Fetching voter data in the dashb...", voterId);
+      localStorage.setItem('voterId', voterId);
     }
-  }, [voterInfo, navigate]);
+  }, [voterId, navigate]);
+
+  useEffect(() => {
+    if (voterId) {
+      console.log("Fetching voter tracking data and loading is true...", voterId);
+      setLoading(true);
+    }
+  }, [voterId]);
+
+  useEffect(() => {
+    if (!voterTrackingLoading) {
+      console.log("Voter tracking data fetched successfully and laoding is falses...", voterId);
+      setLoading(false);
+    }
+  }, [voterTrackingLoading]);
 
 const categories = [
   { id: 1, name: "President", description: "Vote for the President" },
@@ -35,8 +53,12 @@ const handleClickCategory = (category) => {
   dispatch(fetchCandidateCategories(category.name));
 }
 
+console.log("voterId retrieved from localStorage:", voterId);
   return (
     <div className="voter-dashboard">
+      { loading && <p>Loading voter tracking...</p> }
+      { voterId && ( <VoterTracking
+        voterId={voterId} /> )}
       <VoterLoginHeader />
       <main style={styles.main}>
         <h2>Voting Categories</h2>

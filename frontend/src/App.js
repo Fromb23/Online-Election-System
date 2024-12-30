@@ -20,17 +20,18 @@ import Dashboard from './pages/Dashboard';
 import VoterLoginDashboard from './pages/voterLoginDashboard';
 import CandidateList from "./pages/CandidateList";
 import UpdatePassword from './pages/UpdatePassword';
+import VoterTracking from './components/VoterTracking'; // Import VoterTracking
 
 const AuthAdminLayout = () => {
-	const { userInfo } = useSelector((state) => state.user);
-	if (!userInfo) {
-		return <Navigate to='/admin/login' />;
-	}
-	return (
-		<AdminDashboardLayout>
-			<Outlet />
-		</AdminDashboardLayout>
-	)
+    const { userInfo } = useSelector((state) => state.user);
+    if (!userInfo) {
+        return <Navigate to='/admin/login' />;
+    }
+    return (
+        <AdminDashboardLayout>
+            <Outlet />
+        </AdminDashboardLayout>
+    );
 };
 
 const AuthVoterLayout = () => {
@@ -40,36 +41,43 @@ const AuthVoterLayout = () => {
     }
     return (
         <div>
-                <Outlet />
+            {/* Render VoterTracking if the voter is logged in */}
+            <VoterTracking
+                voterId={voterInfo.voterId}
+                category={null} // You can pass the selected category here
+                setVotedCategories={() => {}} // You can pass the necessary setter functions here
+                setVotes={() => {}}
+            />
+            <Outlet />
         </div>
-    )
-}
+    );
+};
+
 function App() {
     return (
         <Router>
             <Routes>
-        {/* Admin Routes */}
-	    <Route element={<AuthAdminLayout />}
-	    >
-	    <Route path="/admin/voters" element ={<VoterComponent />} />
-        <Route path="/admin/dashboard" element={<Dashboard />} />
-	    <Route path="/admin/voters/update/:voterId" element={<UpdateVoterPage />} />
-        <Route path="voters/create" element={<CreateVoter />} />
-        <Route path="admin/candidates" element={<CreateCandidate />} />
-        <Route path="admin/parties" element={<PartyManagement />} />
-        <Route path="admin/vote-categories" element={<VoteCategory />} />
-	    </Route>
-        
-        <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/admin/create" element={<CreateAdmin />} />
+                {/* Admin Routes */}
+                <Route element={<AuthAdminLayout />}>
+                    <Route path="/admin/voters" element={<VoterComponent />} />
+                    <Route path="/admin/dashboard" element={<Dashboard />} />
+                    <Route path="/admin/voters/update/:voterId" element={<UpdateVoterPage />} />
+                    <Route path="voters/create" element={<CreateVoter />} />
+                    <Route path="admin/candidates" element={<CreateCandidate />} />
+                    <Route path="admin/parties" element={<PartyManagement />} />
+                    <Route path="admin/vote-categories" element={<VoteCategory />} />
+                </Route>
+
+                <Route path="/admin/login" element={<AdminLogin />} />
+                <Route path="/admin/create" element={<CreateAdmin />} />
                 
-        {/* Voter Routes */}
-        <Route element={<AuthVoterLayout />}>
-        <Route path="/voter-dashboard" element={<VoterLoginDashboard />} />
-        <Route path="/categories/:categoryId" element={<CandidateList />} />
-        <Route path="/voters/update-password/:voterId" element={<UpdatePassword />} />
-        </Route>
-        <Route path="/voter-login" element={<VoterLogin />} />
+                {/* Voter Routes */}
+                <Route element={<AuthVoterLayout />}>
+                    <Route path="/voter-dashboard" element={<VoterLoginDashboard />} />
+                    <Route path="/categories/:categoryId" element={<CandidateList />} />
+                    <Route path="/voters/update-password/:voterId" element={<UpdatePassword />} />
+                </Route>
+                <Route path="/voter-login" element={<VoterLogin />} />
 
                 {/* Main Site Routes */}
                 <Route
@@ -92,15 +100,15 @@ function App() {
 }
 
 const containerStyles = {
-	display: 'flex',
-	flexDirection: 'column',
-	minHeight: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100vh',
 };
 
 const mainStyles = {
-	padding: '20px',
-	textAlign: 'center',
-	flex: '1',
+    padding: '20px',
+    textAlign: 'center',
+    flex: '1',
 };
 
 export default App;

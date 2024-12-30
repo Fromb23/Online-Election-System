@@ -8,6 +8,7 @@ import locationSlice from './slices/locationSlices';
 import voteCategorySlice from './slices/voteCategorySlices';
 import createCandidateSlice from './slices/createCandidateSlices';
 import createPartySlice from './slices/createPartySlices';
+import voterTrackingSlice from './slices/voterTrackingSlices';
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
 	  voteCategory: voteCategorySlice,
 	  candidate: createCandidateSlice,
 	  party: createPartySlice,
+	  voterTracking: voterTrackingSlice,
   },
 })
 

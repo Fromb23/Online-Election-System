@@ -109,8 +109,6 @@ export const fetchCandidateCategories = createAsyncThunk(
   async (name, { rejectWithValue }) => {
     try {
       console.log("Fetching candidates by category frontend by name", name);
-      
-      // Update the API request to pass the category name in the URL path
       const response = await api.get(`/candidates/candidateCategory/${name}`);
       
       return response.data;
