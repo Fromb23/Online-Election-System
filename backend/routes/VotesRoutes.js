@@ -18,6 +18,30 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/status/:voterId", async (req, res) => {
+  const { voterId } = req.params;
+
+  if (!voterId) {
+    return res.status(400).json({ error: "Voter ID is required" });
+  }
+
+  try {
+    const votes = await Vote.findAll({
+      where: { voterId }, 
+      include: [{ model: VoteCategory, as: "voteCategory" }],
+    });
+
+    if (votes.length === 0) {
+      return res.status(404).json({ error: "No votes found for this voter" });
+    }
+
+    res.status(200).json(votes);
+  } catch (error) {
+    console.error("Error fetching vote status:", error);
+    res.status(500).json({ error: "Failed to fetch vote status." });
+  }
+});
+
 // Save a new vote
 router.post("/", async (req, res) => {
   console.log("Request body votes post method:", req.body);
