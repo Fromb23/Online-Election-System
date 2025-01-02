@@ -147,10 +147,9 @@ const CandidateList = () => {
     // Check if the candidate is currently selected in the votes state
     const isSelected = votes.candidateId === candidateId;
 
-    return !!votedInCategory || isSelected; // Return true if the candidate was voted for or is currently selected
+    return !!votedInCategory || isSelected;
   };
 
-  // If category is undefined, show a message or redirect
   if (!category) {
     return (
       <div className="candidate-list">
@@ -196,7 +195,7 @@ const CandidateList = () => {
                   <button
                     className={`vote-button ${isVoted(candidate.candidateId) ? "voted" : ""}`}
                     onClick={() => handleVoteToggle(candidate.candidateId)}
-                    disabled={hasVotedInCategory} // Disable if the voter has already voted in this category
+                    disabled={hasVotedInCategory} // Disable if the voter has voted
                   >
                     {isVoted(candidate.candidateId) ? "Voted" : "Vote"}
                   </button>

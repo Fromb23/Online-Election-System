@@ -8,7 +8,7 @@ const Grid = () => {
 		{ title: 'Election Results', icon: '📊' },
 		{ title: 'What’s on the Ballot', icon: '🗳️' },
 		{ title: 'Where to Vote in Person', icon: '📍' },
-		{ title: 'Become an Election Worker', icon: '🛠️' },
+		{ title: 'Become an Election Worker', icon: '🛠️', link: '/apply-voting' },
 		{ title: 'Campaign Resources', icon: '📖' },
 		{ title: 'News & Press Releases', icon: '📰' },
 	];

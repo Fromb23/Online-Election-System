@@ -5,9 +5,10 @@ import { setLoading } from '../redux/slices/voterLoginSlices';
 import VoterLoginHeader from '../components/voterLoginHeader';
 import VoterLoginFooter from '../components/voterLoginFooter';
 import VoterTracking from '../components/VoterTracking';
-import '../styles/VoterDashboard.css';
 import CandidateCard from "../components/CandidateCard";
 import { useSelector, useDispatch } from 'react-redux';
+import TimerComponent from '../components/TimerComponent';
+import '../styles/VoterDashboard.css';
 
 const VoterLoginDashboard = () => {
   const dispatch = useDispatch();
@@ -58,9 +59,11 @@ const VoterLoginDashboard = () => {
 
   return (
     <div className="voter-dashboard">
+      <VoterLoginHeader />
+      <TimerComponent />
       {loading && <p>Loading voter tracking...</p>}
       {voterId && <VoterTracking voterId={voterId} />}
-      <VoterLoginHeader />
+      
       <main style={styles.main}>
         <h2>Voting Categories</h2>
         <div style={styles.cards}>

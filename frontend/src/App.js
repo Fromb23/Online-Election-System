@@ -21,6 +21,8 @@ import VoterLoginDashboard from './pages/voterLoginDashboard';
 import CandidateList from "./pages/CandidateList";
 import UpdatePassword from './pages/UpdatePassword';
 import VoterTracking from './components/VoterTracking'; // Import VoterTracking
+import TimerComponent from './components/TimerComponent';
+import ElectionPositionsPage from './pages/ElectionPositionsPage';
 
 const AuthAdminLayout = () => {
     const { userInfo } = useSelector((state) => state.user);
@@ -73,11 +75,13 @@ function App() {
                 
                 {/* Voter Routes */}
                 <Route element={<AuthVoterLayout />}>
+                    <Route path="/timer-component" element={<TimerComponent />} />
                     <Route path="/voter-dashboard" element={<VoterLoginDashboard />} />
                     <Route path="/categories/:categoryId" element={<CandidateList />} />
                     <Route path="/voters/update-password/:voterId" element={<UpdatePassword />} />
                 </Route>
                 <Route path="/voter-login" element={<VoterLogin />} />
+                <Route path="/apply-voting" element={<ElectionPositionsPage />} />
 
                 {/* Main Site Routes */}
                 <Route
