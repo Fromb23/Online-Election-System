@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   isLoading: false,
   error: null,
-  voteStatuses: {},
+  voteStatuses: [],
   voterTrackingData: null,
 };
 
@@ -29,14 +29,13 @@ const voterTrackingSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    // Handle the fulfilled and rejected actions for async operations (e.g., fetching vote statuses or tracking data)
     builder.addCase('voterTracking/fetchVoterTracking/fulfilled', (state, action) => {
       state.isLoading = false;
-      state.voterTrackingData = action.payload; // Store the fetched tracking data
+      state.voterTrackingData = action.payload;
     });
     builder.addCase('voterTracking/fetchVoterTracking/rejected', (state, action) => {
       state.isLoading = false;
-      state.error = action.payload; // Handle error
+      state.error = action.payload;
     });
   },
 });

@@ -7,7 +7,6 @@ import '../styles/admin.css';
 const AdminDashboardLayout = ({ children }) => {
 	return (
 		<div className="admin-dashboard">
-		{/* Include the Admin Header */}
 		<AdminHeader />
 		<div className="admin-container">
 		<Sidebar />

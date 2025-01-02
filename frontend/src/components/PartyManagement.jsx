@@ -1,23 +1,22 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchParties, deleteParty, addParty, updateParty } from '../redux/actions/createPartyActions';
-import { FaEdit, FaTrash } from 'react-icons/fa'; // Import icons
+import { FaEdit, FaTrash } from 'react-icons/fa';
 
 const PartyManagement = () => {
   const { selectedParty, parties, loading, error } = useSelector((state) => state.party);
   const dispatch = useDispatch();
   const [partyName, setPartyName] = useState('');
   const [editingParty, setEditingParty] = useState(null);
-  const [isDelete, setIsDelete] = useState(false); // New state to track delete action
+  const [isDelete, setIsDelete] = useState(false);
   const formRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (formRef.current && !formRef.current.contains(event.target)) {
-        // Reset form when clicked outside of it
         setEditingParty(null);
         setPartyName('');
-        setIsDelete(false); // Reset delete state
+        setIsDelete(false);
       }
     };
 
@@ -40,15 +39,14 @@ const PartyManagement = () => {
     }
 
     if (isDelete) {
-      // If in delete state, handle deletion
       if (window.confirm(`Are you sure you want to remove ${partyName}?`)) {
         dispatch(deleteParty(editingParty.partyId))
           .then(() => {
             alert("Party deleted successfully!");
             setEditingParty(null);
             setPartyName('');
-            setIsDelete(false); // Reset delete state
-            dispatch(fetchParties()); // Re-fetch parties after delete
+            setIsDelete(false);
+            dispatch(fetchParties());
           })
           .catch((err) => console.error(err));
       }
@@ -60,18 +58,17 @@ const PartyManagement = () => {
           alert("Party updated successfully!");
           setEditingParty(null);
           setPartyName("");
-          dispatch(fetchParties()); // Re-fetch parties after update
+          dispatch(fetchParties());
         })
         .catch((err) => console.error(err));
     } else {
-      // If no party selected, create a new one
       dispatch(addParty({ partyName: partyName }))
         .then(() => {
           alert("A new Party added successfully!");
           setEditingParty(null);
           setPartyName('');
-          setIsDelete(false); // Reset delete state
-          dispatch(fetchParties()); // Re-fetch parties after adding
+          setIsDelete(false);
+          dispatch(fetchParties());
         })
         .catch((err) => console.error(err));
     }
@@ -79,14 +76,14 @@ const PartyManagement = () => {
 
   const handleEditParty = (party) => {
     setEditingParty(party);
-    setPartyName(party.partyName); // Set input to the selected party name for editing
-    setIsDelete(false); // Reset delete state if editing
+    setPartyName(party.partyName);
+    setIsDelete(false);
   };
 
   const handleDelete = (party) => {
     setEditingParty(party);
-    setPartyName(party.partyName); // Populate the input with party name for deletion
-    setIsDelete(true); // Set delete state
+    setPartyName(party.partyName);
+    setIsDelete(true);
   };
 
   if (loading) return <p>Loading parties...</p>;

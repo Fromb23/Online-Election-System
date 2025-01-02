@@ -11,10 +11,31 @@ const CandidateList = () => {
   const dispatch = useDispatch();
 
   const [votes, setVotes] = useState({});
-  const [isVoteConfirmed, setIsVoteConfirmed] = useState(false);
+  const [hasVotedInCategory, setHasVotedInCategory] = useState(false); // Track if the voter has voted in the current category
   const category = location.state?.category;
 
   const { loading, candidates, error } = useSelector((state) => state.candidate);
+
+  useEffect(() => {
+    if (!category) {
+      console.error("Category is undefined. Redirecting to dashboard.");
+      navigate("/voter-dashboard"); // Redirect to dashboard if category is undefined
+      return;
+    }
+
+    // Fetch saved votes from localStorage
+    const savedData = JSON.parse(localStorage.getItem("fetchedVotes")) || {};
+    const savedVotes = savedData.fetchedVotes || [];
+
+    // Check if the voter has already voted in the current category (status is true)
+    const votedInCategory = savedVotes.find(
+      (vote) => vote.voteCategory.name === category.name && vote.status === true
+    );
+
+    if (votedInCategory) {
+      setHasVotedInCategory(true); // Update the hasVotedInCategory state
+    }
+  }, [category, navigate]);
 
   useEffect(() => {
     if (category) {
@@ -31,7 +52,6 @@ const CandidateList = () => {
       };
 
       setVotes(categoryVotes);
-      setIsVoteConfirmed(categoryVotes.status === "voted");
       dispatch(fetchCandidateCategories(category.name));
     }
   }, [category, dispatch]);
@@ -39,7 +59,7 @@ const CandidateList = () => {
   const generateUniqueId = () => `voter_${Date.now()}`;
 
   const handleVoteToggle = (candidateId) => {
-    if (!category?.name || isVoteConfirmed) return;
+    if (!category?.name || hasVotedInCategory) return; // Prevent voting if already voted in this category
 
     const savedData = JSON.parse(localStorage.getItem("votes")) || {};
     const voterId = localStorage.getItem("voterId");
@@ -47,10 +67,11 @@ const CandidateList = () => {
     const updatedVotes = savedData.votes || {};
     const categoryVotes = updatedVotes[category.name] || { status: "not_voted", candidateId: null };
 
+    // If the same candidate is clicked again, deselect them
     if (categoryVotes.candidateId === candidateId) {
-      categoryVotes.candidateId = null;
+      categoryVotes.candidateId = null; // Deselect the candidate
     } else {
-      categoryVotes.candidateId = candidateId;
+      categoryVotes.candidateId = candidateId; // Select the new candidate
     }
 
     updatedVotes[category.name] = categoryVotes;
@@ -85,7 +106,26 @@ const CandidateList = () => {
       };
 
       localStorage.setItem("votes", JSON.stringify(savedData));
-      setIsVoteConfirmed(true);
+      setHasVotedInCategory(true); // Mark the voter as having voted in this category
+
+      // Update fetchedVotes in localStorage
+      const fetchedData = JSON.parse(localStorage.getItem("fetchedVotes")) || {};
+      const fetchedVotes = fetchedData.fetchedVotes || [];
+
+      // Add the new vote to fetchedVotes
+      const newVote = {
+        voteId: Date.now(), // Generate a unique ID for the vote
+        voterId,
+        CandidateId: categoryVotes.candidateId,
+        VoteCategoryId: category.id, // Assuming category.id is available
+        status: true,
+        voteCategory: {
+          name: category.name,
+        },
+      };
+
+      fetchedVotes.push(newVote);
+      localStorage.setItem("fetchedVotes", JSON.stringify({ fetchedVotes }));
 
       alert(`Your vote for ${category.name} has been recorded!`);
     } catch (err) {
@@ -94,11 +134,34 @@ const CandidateList = () => {
     }
   };
 
-  const isVoted = (candidateId) => votes.candidateId === candidateId;
+  const isVoted = (candidateId) => {
+    // Fetch saved votes from localStorage
+    const savedData = JSON.parse(localStorage.getItem("fetchedVotes")) || {};
+    const savedVotes = savedData.fetchedVotes || [];
+
+    // Check if the candidate was voted for in the current category
+    const votedInCategory = savedVotes.find(
+      (vote) => vote.voteCategory.name === category.name && vote.CandidateId === candidateId && vote.status === true
+    );
+
+    // Check if the candidate is currently selected in the votes state
+    const isSelected = votes.candidateId === candidateId;
+
+    return !!votedInCategory || isSelected; // Return true if the candidate was voted for or is currently selected
+  };
+
+  // If category is undefined, show a message or redirect
+  if (!category) {
+    return (
+      <div className="candidate-list">
+        <p>No category selected. Redirecting to dashboard...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="candidate-list">
-      <h1>{category?.name} Category</h1>
+      <h1>{category.name} Category</h1>
       {loading && <p>Loading candidates...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
       {!loading && !error && candidates && candidates.length > 0 ? (
@@ -133,7 +196,7 @@ const CandidateList = () => {
                   <button
                     className={`vote-button ${isVoted(candidate.candidateId) ? "voted" : ""}`}
                     onClick={() => handleVoteToggle(candidate.candidateId)}
-                    disabled={votes.status === "voted" || isVoteConfirmed}
+                    disabled={hasVotedInCategory} // Disable if the voter has already voted in this category
                   >
                     {isVoted(candidate.candidateId) ? "Voted" : "Vote"}
                   </button>
@@ -145,7 +208,7 @@ const CandidateList = () => {
       ) : (
         <p>No candidates found for this category.</p>
       )}
-      {votes.candidateId && votes.status !== "voted" && (
+      {votes.candidateId && !hasVotedInCategory && (
         <button className="confirm-button" onClick={handleConfirmVote}>
           Confirm Vote
         </button>

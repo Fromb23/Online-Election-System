@@ -5,15 +5,13 @@ import '../styles/Header.css';
 const AdminHeader = () => {
   const { userInfo } = useSelector((state) => state.user);
   const [showProfile, setShowProfile] = useState(false);
-  const profileRef = useRef(null); // Reference to the profile icon and dropdown
-  const dropdownRef = useRef(null); // Reference to the dropdown menu
+  const profileRef = useRef(null);
+  const dropdownRef = useRef(null);
 
-  // Toggle the profile dropdown on icon click
   const handleProfileClick = () => {
     setShowProfile(!showProfile);
   };
 
-  // Close dropdown if click is outside of the profile or dropdown
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -22,14 +20,12 @@ const AdminHeader = () => {
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target)
       ) {
-        setShowProfile(false); // Close dropdown
+        setShowProfile(false);
       }
     };
 
-    // Add event listener for outside clicks
     document.addEventListener('mousedown', handleClickOutside);
 
-    // Cleanup event listener on component unmount
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
@@ -49,8 +45,6 @@ const AdminHeader = () => {
           className="profile-icon"
         />
         <span>Welcome, {userInfo?.username || 'Admin'}</span>
-
-        {/* Profile dropdown */}
         {showProfile && (
           <div className="profile-dropdown" ref={dropdownRef}>
             <div>Edit Profile</div>

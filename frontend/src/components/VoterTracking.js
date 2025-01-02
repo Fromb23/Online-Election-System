@@ -6,54 +6,38 @@ const VoterTracking = ({ voterId }) => {
   const dispatch = useDispatch();
   const { voteStatuses, isLoading, error } = useSelector((state) => state.voterTracking);
 
+  // Fetch voter voting status from endpoint api
   useEffect(() => {
     if (voterId) {
       const savedData = JSON.parse(localStorage.getItem("votes")) || {};
       const categoryVotes = savedData.votes || {};
-  
-      if (Object.keys(categoryVotes).length > 0) {
-        console.log("Local Votes:", categoryVotes);
-      } else {
+
+      if (Object.keys(categoryVotes).length === 0) {
+        console.log("Fetching vote data from backend...");
         dispatch(fetchVoterVotingStatus(voterId));
+      } else {
+        console.log("Local Votes:", categoryVotes);
       }
     }
   }, [dispatch, voterId]);
 
-  // Save data to localStorage once data has been fetched (in Redux state)
+  // save to localStorage
   useEffect(() => {
     if (voteStatuses && Object.keys(voteStatuses).length > 0) {
-      localStorage.setItem("votes", JSON.stringify({ votes: voteStatuses }));
+      console.log("Saving vote statuses to localStorage...");
+      localStorage.setItem("fetchedVotes", JSON.stringify({ fetchedVotes: voteStatuses }));
     }
   }, [voteStatuses]);
-
-  useEffect(() => {
-    if(voteStatuses && Object.keys(voteStatuses).length > 0) {
-        updateCategories();
-    }
-  }, [voteStatuses]);
-
-  const updateCategories = () => {
-    for ( const[categoryId, status] of Object.entries(voteStatuses)) {
-      const category = document.getElementById(categoryId);
-      if (category) {
-        if (status === "voted") {
-          category.classList.add("voted");
-        } else if (status === "notVoted") {
-          category.classList.add("not-voted");
-        }
-      }
-    }
-  }
 
   if (isLoading) {
-    return <div>Loading data from vote Tracking...</div>;
+    return <div>Loading data from vote tracking...</div>;
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div>Error fron voterTracking: {error}</div>;
   }
 
-  return null; // No UI if just fetching data
+  return null;
 };
 
 export default VoterTracking;

@@ -11,17 +11,20 @@ import { useSelector, useDispatch } from 'react-redux';
 
 const VoterLoginDashboard = () => {
   const dispatch = useDispatch();
-  const[selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [candidates, setCandidates] = useState([]);
+  const [votedCandidate, setVotedCandidate] = useState(null); // Track the voted candidate
+  const [isVoted, setIsVoted] = useState(false); // Track if the user has voted
   const navigate = useNavigate();
-  const voterId = localStorage.getItem('voterId')
-  const { loading, candidate, error } = useSelector((state) => state.candidate);
-  const voterTrackingLoading = useSelector((state) => state.voterTracking.loading);
+  const voterId = localStorage.getItem('voterId');
+  const { loading, error, candidate } = useSelector((state) => state.candidate);
+  const voterTrackingLoading = useSelector((state) => state.voterTracking.isLoading);
 
   useEffect(() => {
     if (!voterId) {
       navigate("/voter-login");
     } else {
-      console.log("Fetching voter data in the dashb...", voterId);
+      console.log("Fetching voter data in the dashboard...", voterId);
       localStorage.setItem('voterId', voterId);
     }
   }, [voterId, navigate]);
@@ -33,55 +36,60 @@ const VoterLoginDashboard = () => {
     }
   }, [voterId]);
 
+  const categories = [
+    { id: 1, name: "President", description: "Vote for the President" },
+    { id: 2, name: "Governor", description: "Vote for the Governor" },
+    { id: 3, name: "Member of Parliament", description: "Vote for your MP" },
+    { id: 4, name: "MCA", description: "Vote for the MCA" },
+    // Add more categories as needed
+  ];
+
+  const handleClickCategory = (category) => {
+    setSelectedCategory(encodeURIComponent(category.name));
+    dispatch(fetchCandidateCategories(category.name));
+  };
+
+  // Set candidates if available in Redux store
   useEffect(() => {
-    if (!voterTrackingLoading) {
-      console.log("Voter tracking data fetched successfully and laoding is falses...", voterId);
-      setLoading(false);
+    if (Array.isArray(candidate)) {
+      setCandidates(candidate);
     }
-  }, [voterTrackingLoading]);
+  }, [candidate]);
 
-const categories = [
-  { id: 1, name: "President", description: "Vote for the President" },
-  { id: 2, name: "Governor", description: "Vote for the Governor" },
-  { id: 3, name: "Member of Paliament", description: "Vote for your MP"},
-  { id: 4, name: "MCA", description: "Vote for the MCA"},
-  // Add more categories as needed
-];
-
-const handleClickCategory = (category) => {
-  setSelectedCategory(category.name);
-  dispatch(fetchCandidateCategories(category.name));
-}
-
-console.log("voterId retrieved from localStorage:", voterId);
   return (
     <div className="voter-dashboard">
-      { loading && <p>Loading voter tracking...</p> }
-      { voterId && ( <VoterTracking
-        voterId={voterId} /> )}
+      {loading && <p>Loading voter tracking...</p>}
+      {voterId && <VoterTracking voterId={voterId} />}
       <VoterLoginHeader />
       <main style={styles.main}>
         <h2>Voting Categories</h2>
         <div style={styles.cards}>
-        {categories.map((category) => (
-  <div 
-    key={category.id} 
-    className="category-card" 
-    onClick={() => handleClickCategory(category)}
-  >
-    <CandidateCard category={category} />
-  </div>
-))}
+          {categories.map((category) => (
+            <div
+              key={category.id}
+              className="category-card"
+              onClick={() => handleClickCategory(category)}
+            >
+              <CandidateCard category={category} />
+            </div>
+          ))}
         </div>
         {loading && <p>Loading candidates...</p>}
         {error && <p style={{ color: "red" }}>{error}</p>}
-        {candidate && (
+        {selectedCategory && (
           <div>
             <h2>Candidates for {selectedCategory}</h2>
+            {isVoted && (
+              <p>You have already voted for candidate {votedCandidate}</p>
+            )}
             <div style={styles.cards}>
-              {candidate.map((candidate) => (
-                <CandidateCard key={candidate.candidateId} candidate={candidate} />
-              ))}
+              {candidates.length > 0 ? (
+                candidates.map((candidate) => (
+                  <CandidateCard key={candidate.candidateId} candidate={candidate} />
+                ))
+              ) : (
+                <p>No candidates available for this category.</p>
+              )}
             </div>
           </div>
         )}

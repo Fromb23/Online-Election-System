@@ -14,16 +14,15 @@ const VoteCategories = () => {
   const { categories, loading, error } = useSelector((state) => state.voteCategory);
   const [categoryName, setCategoryName] = useState("");
   const [editingCategory, setEditingCategory] = useState(null);
-  const [isDelete, setIsDelete] = useState(false); // New state to track delete action
+  const [isDelete, setIsDelete] = useState(false);
   const formRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (formRef.current && !formRef.current.contains(event.target)) {
-        // Reset form when clicked outside of it
         setEditingCategory(null);
         setCategoryName('');
-        setIsDelete(false); // Reset delete state
+        setIsDelete(false);
       }
     };
 
@@ -46,7 +45,6 @@ const VoteCategories = () => {
     }
 
     if (isDelete) {
-      // If in delete state, handle deletion
       if (window.confirm(`Are you sure you want to remove the category: ${categoryName}?`)) {
         dispatch(deleteVoteCategory(editingCategory.voteCategoryId))
         .then(() => {
@@ -70,14 +68,13 @@ const VoteCategories = () => {
         })
         .catch((err) => console.error(err));
     } else {
-      // If no category selected, create a new one
       dispatch(addVoteCategory({ name: categoryName }))
         .then(() => {
           alert("Vote category added successfully!");
           setEditingCategory(null);
           setCategoryName('');
-          setIsDelete(false); // Reset delete state
-          dispatch(fetchVoteCategories()); // Re-fetch categories after adding
+          setIsDelete(false);
+          dispatch(fetchVoteCategories());
         })
         .catch((err) => console.error(err));
     }
@@ -85,14 +82,14 @@ const VoteCategories = () => {
 
   const handleEditCategory = (category) => {
     setEditingCategory(category);
-    setCategoryName(category.name); // Set input to the selected category name for editing
-    setIsDelete(false); // Reset delete state if editing
+    setCategoryName(category.name);
+    setIsDelete(false);
   };
 
   const handleDelete = (category) => {
     setEditingCategory(category);
-    setCategoryName(category.name); // Populate the input with category name for deletion
-    setIsDelete(true); // Set delete state
+    setCategoryName(category.name);
+    setIsDelete(true);
   };
 
   if (loading) return <p>Loading...</p>;

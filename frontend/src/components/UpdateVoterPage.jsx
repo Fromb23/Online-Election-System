@@ -33,7 +33,6 @@ const UpdateVoterPage = () => {
 		console.log('Form submitted');
 		e.preventDefault();
 
-		// Prepare the updated voter data
 		const updatedVoter = {
 			fullName,
 			email,
@@ -44,26 +43,19 @@ const UpdateVoterPage = () => {
 		};
 
 		try {
-			// Dispatch the updateVoter action and wait for it to complete
 			const resultAction = await dispatch(updateVoter({ voterId, voterData: updatedVoter }));
-
-			// Check if the update was successful
 			if (updateVoter.fulfilled.match(resultAction)) {
-				// Alert the user and redirect after the update is successful
 				alert('Updated voter successfully');
-				navigate('/admin/voters');  // Redirect back to voters list
+				navigate('/admin/voters');
 			} else {
-				// Handle the error case
 				alert('Failed to update voter');
 			}
 		} catch (error) {
-			// Handle unexpected errors
 			console.log(error);
 			alert('Error updating voter');
 		}
 	};
 
-	// Redirect or show success message after successful update
 	useEffect(() => {
 		if (error) {
 			alert(`Error: ${error}`);
@@ -147,7 +139,7 @@ const UpdateVoterPage = () => {
 				<Circles
     height="40"
     width="40"
-    color="#333" // Match your theme
+    color="#333"
     ariaLabel="loading-spinner"
   />
 			</div>
