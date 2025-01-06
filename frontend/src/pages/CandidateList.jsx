@@ -11,7 +11,7 @@ const CandidateList = () => {
   const dispatch = useDispatch();
 
   const [votes, setVotes] = useState({});
-  const [hasVotedInCategory, setHasVotedInCategory] = useState(false); // Track if the voter has voted in the current category
+  const [hasVotedInCategory, setHasVotedInCategory] = useState(false);
   const category = location.state?.category;
 
   const { loading, candidates, error } = useSelector((state) => state.candidate);
@@ -19,7 +19,7 @@ const CandidateList = () => {
   useEffect(() => {
     if (!category) {
       console.error("Category is undefined. Redirecting to dashboard.");
-      navigate("/voter-dashboard"); // Redirect to dashboard if category is undefined
+      navigate("/voter-dashboard");
       return;
     }
 
@@ -59,7 +59,7 @@ const CandidateList = () => {
   const generateUniqueId = () => `voter_${Date.now()}`;
 
   const handleVoteToggle = (candidateId) => {
-    if (!category?.name || hasVotedInCategory) return; // Prevent voting if already voted in this category
+    if (!category?.name || hasVotedInCategory) return;
 
     const savedData = JSON.parse(localStorage.getItem("votes")) || {};
     const voterId = localStorage.getItem("voterId");
@@ -106,7 +106,7 @@ const CandidateList = () => {
       };
 
       localStorage.setItem("votes", JSON.stringify(savedData));
-      setHasVotedInCategory(true); // Mark the voter as having voted in this category
+      setHasVotedInCategory(true);
 
       // Update fetchedVotes in localStorage
       const fetchedData = JSON.parse(localStorage.getItem("fetchedVotes")) || {};
@@ -114,10 +114,10 @@ const CandidateList = () => {
 
       // Add the new vote to fetchedVotes
       const newVote = {
-        voteId: Date.now(), // Generate a unique ID for the vote
+        voteId: Date.now(),
         voterId,
         CandidateId: categoryVotes.candidateId,
-        VoteCategoryId: category.id, // Assuming category.id is available
+        VoteCategoryId: category.id,
         status: true,
         voteCategory: {
           name: category.name,
@@ -139,7 +139,6 @@ const CandidateList = () => {
     const savedData = JSON.parse(localStorage.getItem("fetchedVotes")) || {};
     const savedVotes = savedData.fetchedVotes || [];
 
-    // Check if the candidate was voted for in the current category
     const votedInCategory = savedVotes.find(
       (vote) => vote.voteCategory.name === category.name && vote.CandidateId === candidateId && vote.status === true
     );

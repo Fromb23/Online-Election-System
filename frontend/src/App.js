@@ -23,6 +23,7 @@ import UpdatePassword from './pages/UpdatePassword';
 import VoterTracking from './components/VoterTracking'; // Import VoterTracking
 import TimerComponent from './components/TimerComponent';
 import ElectionPositionsPage from './pages/ElectionPositionsPage';
+import LiveResultsPage from './pages/LiveResultsPage';
 
 const AuthAdminLayout = () => {
     const { userInfo } = useSelector((state) => state.user);
@@ -82,6 +83,7 @@ function App() {
                 </Route>
                 <Route path="/voter-login" element={<VoterLogin />} />
                 <Route path="/apply-voting" element={<ElectionPositionsPage />} />
+                <Route path="/live-results" element={<LiveResultsPage />} />
 
                 {/* Main Site Routes */}
                 <Route

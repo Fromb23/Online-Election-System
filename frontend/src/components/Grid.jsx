@@ -5,7 +5,7 @@ const Grid = () => {
 	const items = [
 		{ title: 'Login to Vote', icon: '📝', link: '/voter-login'},
 		{ title: 'How to vote by mail', icon: '📬' },
-		{ title: 'Election Results', icon: '📊' },
+		{ title: 'Election Results', icon: '📊', link: 'live-results' },
 		{ title: 'What’s on the Ballot', icon: '🗳️' },
 		{ title: 'Where to Vote in Person', icon: '📍' },
 		{ title: 'Become an Election Worker', icon: '🛠️', link: '/apply-voting' },
