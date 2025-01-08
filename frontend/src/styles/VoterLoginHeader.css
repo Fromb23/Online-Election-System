@@ -1,3 +1,4 @@
+/* Existing Styles */
 .voter-header {
 	display: flex;
 	justify-content: space-between;
@@ -42,4 +43,101 @@
   .profile-dropdown a:hover {
 	background-color: #ddd;
 	border-radius: 4px;
+  }
+  
+  /* Additional Styles for Profile Modal */
+  .profile-modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+  }
+  
+  .profile-modal-content {
+	background-color: white;
+	padding: 20px;
+	border-radius: 10px;
+	width: 400px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	position: relative;
+  }
+  
+  .close-button {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	background: none;
+	border: none;
+	font-size: 20px;
+	cursor: pointer;
+	color: #333;
+  }
+  
+  .close-button:hover {
+	color: #000;
+  }
+  
+  .profile-details {
+	margin-bottom: 20px;
+  }
+  
+  .profile-details p {
+	margin: 10px 0;
+	color: #333;
+  }
+  
+  .update-icon {
+	text-align: center;
+	margin: 20px 0;
+  }
+  
+  .profile-icon-preview {
+	width: 80px;
+	height: 80px;
+	border-radius: 50%;
+	cursor: pointer;
+	border: 2px solid #ddd;
+  }
+  
+  .update-password {
+	margin-top: 20px;
+  }
+  
+  .update-password input {
+	display: block;
+	width: 100%;
+	padding: 10px;
+	margin: 10px 0;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	font-size: 14px;
+  }
+  
+  .update-password button {
+	margin-right: 10px;
+	padding: 10px 20px;
+	background-color: #007bff;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 14px;
+  }
+  
+  .update-password button:hover {
+	background-color: #0056b3;
+  }
+  
+  .update-password button.cancel {
+	background-color: #dc3545;
+  }
+  
+  .update-password button.cancel:hover {
+	background-color: #c82333;
   }
