@@ -1,78 +1,46 @@
-import styled from 'styled-components';
-
-export const VoterMailContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background: url('../assets/images/voterMailBackground.jpg') no-repeat center center/cover;
-`;
-
-export const VoterMailCard = styled.div`
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  padding: 25px;
-  text-align: center;
-  width: 350px;
-`;
-
-export const VoterMailTitle = styled.h1`
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #0047ab;
-`;
-
-export const VoterMailSubtitle = styled.p`
-  margin-bottom: 20px;
-  color: #666;
-`;
-
-export const VoterMailForm = styled.form`
-  display: flex;
-  flex-direction: column;
-`;
-
-export const FormGroup = styled.div`
-  position: relative;
-  margin-bottom: 20px;
-`;
-
-export const InputField = styled.input`
-  width: 100%;
-  padding: 12px 12px 12px 40px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-`;
-
-export const Icon = styled.span`
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-`;
-
-export const SubmitButton = styled.button`
-  background-color: #0047ab;
-  color: #fff;
-  border: none;
-  padding: 12px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-
-  &:hover {
-    background-color: #003a94;
+.votebymail-info-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    font-family: 'Arial', sans-serif;
   }
-`;
-
-export const ForgotPasswordLink = styled.a`
-  display: block;
-  margin-top: 15px;
-  color: #0047ab;
-  text-decoration: none;
-
-  &:hover {
+  
+  h1, h2 {
+    text-align: center;
+    color: #333;
+  }
+  
+  p, ol, ul {
+    line-height: 1.6;
+  }
+  
+  ol {
+    margin: 20px 0;
+  }
+  
+  .faq-item {
+    margin-bottom: 20px;
+  }
+  
+  .faq-item h3 {
+    color: #4a90e2;
+  }
+  
+  footer {
+    text-align: center;
+    margin-top: 30px;
+  }
+  
+  footer a {
+    color: #4caf50;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  footer a:hover {
     text-decoration: underline;
   }
-`;
+  

@@ -1,155 +1,65 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { requestMailBallot } from '../redux/actions/voterActions';
-import { fetchCounties, fetchConstituencies } from '../redux/actions/locationActions';
-import { clearConstituencies } from '../redux/slices/locationSlices';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import '../styles/VotebyMail.css';
 
 const VotebyMail = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  
-  const { loading, success, error } = useSelector((state) => state.mailBallot);
-  const { counties, constituencies } = useSelector((state) => state.location);
-
-  const [countyId, setCountyId] = useState('');
-  const [selectedConstituency, setSelectedConstituency] = useState('');
-  const [email, setEmail] = useState('');
-  const [fullName, setFullName] = useState('');
-  const [address, setAddress] = useState('');
-  const [voterId, setVoterId] = useState('');
-  const [submitted, setSubmitted] = useState(false);
-
-  // Fetch counties on component mount
-  useEffect(() => {
-    dispatch(fetchCounties());
-  }, [dispatch]);
-
-  // Fetch constituencies based on selected county
-  useEffect(() => {
-    if (countyId) {
-      dispatch(fetchConstituencies(countyId));
-      setSelectedConstituency('');
-    } else {
-      dispatch(clearConstituencies());
-      setSelectedConstituency('');
-    }
-  }, [countyId, dispatch]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!countyId || !selectedConstituency) {
-      alert('Please fill all required fields');
-      return;
-    }
-
-    const mailBallotRequest = {
-      voterId,
-      fullName,
-      email,
-      address,
-      county: countyId,
-      constituency: selectedConstituency,
-    };
-
-    dispatch(requestMailBallot(mailBallotRequest));
-    setSubmitted(true);
-    navigate('/confirm');
-  };
-
   return (
-    <div className="votebymail-container">
-      <h2>Request Mail-in Ballot</h2>
+    <div className="votebymail-info-container">
+      <h1>Vote by Mail - How It Works</h1>
 
-      {error && <p className="error-message">{error}</p>}
-      {success && submitted ? (
-        <p>Your mail-in ballot request has been submitted!</p>
-      ) : (
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>Voter ID</label>
-            <input
-              type="text"
-              value={voterId}
-              onChange={(e) => setVoterId(e.target.value)}
-              required
-            />
-          </div>
+      <section className="intro">
+        <p>
+          Voting by mail allows you to securely cast your vote from the comfort of your home. This method is especially useful for voters who may be traveling, have health concerns, or prefer not to vote in person.
+        </p>
+      </section>
 
-          <div>
-            <label>Full Name</label>
-            <input
-              type="text"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              required
-            />
-          </div>
+      <section className="steps">
+        <h2>Steps to Vote by Mail</h2>
+        <ol>
+          <li><strong>Check Eligibility:</strong> Ensure you're registered to vote and eligible for mail-in voting.</li>
+          <li><strong>Request a Ballot:</strong> Submit a mail-in ballot request through your local election office website or by phone.</li>
+          <li><strong>Fill Out Your Ballot:</strong> Carefully follow the instructions included with the ballot. Avoid mistakes and ensure your signature matches the one on file.</li>
+          <li><strong>Return Your Ballot:</strong> Return your ballot by mail or at designated drop-off locations before the deadline.</li>
+        </ol>
+      </section>
 
-          <div>
-            <label>Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
+      <section className="deadlines">
+        <h2>Key Deadlines</h2>
+        <ul>
+          <li><strong>Ballot Request Deadline:</strong> [Insert date based on region]</li>
+          <li><strong>Ballot Return Deadline:</strong> [Insert date based on region]</li>
+        </ul>
+        <p>
+          <em>Note:</em> It's recommended to submit your ballot as early as possible to ensure timely delivery.
+        </p>
+      </section>
 
-          <div>
-            <label>Address</label>
-            <input
-              type="text"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              required
-            />
-          </div>
+      <section className="faq">
+        <h2>Frequently Asked Questions</h2>
+        <div className="faq-item">
+          <h3>Who is eligible to vote by mail?</h3>
+          <p>
+            Most registered voters can vote by mail. Some states require an excuse, while others offer mail-in ballots to all voters.
+          </p>
+        </div>
 
-          {/* County Select */}
-          <div>
-            <label>County</label>
-            <select
-              value={countyId}
-              onChange={(e) => setCountyId(e.target.value)}
-              required
-            >
-              <option value="">Select County</option>
-              {counties.map((county) => (
-                <option key={county.id} value={county.id}>
-                  {county.name}
-                </option>
-              ))}
-            </select>
-          </div>
+        <div className="faq-item">
+          <h3>What if I make a mistake on my ballot?</h3>
+          <p>
+            Contact your local election office immediately to request a new ballot or instructions for corrections.
+          </p>
+        </div>
 
-          {/* Constituency Select */}
-          <div>
-            <label>Constituency</label>
-            <select
-              value={selectedConstituency}
-              onChange={(e) => setSelectedConstituency(e.target.value)}
-              required
-              disabled={!constituencies.length}
-            >
-              <option value="">Select Constituency</option>
-              {constituencies.map((constituency) => (
-                <option key={constituency.id} value={constituency.id}>
-                  {constituency.name}
-                </option>
-              ))}
-            </select>
-          </div>
+        <div className="faq-item">
+          <h3>How do I track my mail-in ballot?</h3>
+          <p>
+            Many states provide online tracking systems to follow the status of your mail-in ballot. Check your local election website for details.
+          </p>
+        </div>
+      </section>
 
-          <button
-            type="submit"
-            disabled={loading || !voterId || !fullName || !countyId || !selectedConstituency}
-          >
-            {loading ? 'Submitting...' : 'Request Ballot'}
-          </button>
-        </form>
-      )}
+      <footer>
+        <p>For more information, visit your <a href="https://www.nass.org/can-I-vote" target="_blank" rel="noopener noreferrer">local election office</a>.</p>
+      </footer>
     </div>
   );
 };
