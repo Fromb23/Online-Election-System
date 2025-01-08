@@ -1,0 +1,69 @@
+.campaign-container {
+    text-align: center;
+    padding: 50px 20px;
+  }
+  
+  .campaign-container h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .campaign-container p {
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+  }
+  
+  .resources-list {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+  
+  .resource-item {
+    width: 320px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+  }
+  
+  .resource-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  }
+  
+  .resource-item img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 15px;
+  }
+  
+  .resource-item h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .resource-item p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+  
+  .resource-item button {
+    padding: 12px 25px;
+    font-size: 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .resource-item button:hover {
+    background-color: #0056b3;
+  }
+  
