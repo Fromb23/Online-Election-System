@@ -4,7 +4,7 @@ import Card from './Card';
 const Grid = () => {
 	const items = [
 		{ title: 'Login to Vote', icon: '📝', link: '/voter-login'},
-		{ title: 'How to vote by mail', icon: '📬' },
+		{ title: 'How to vote by mail', icon: '📬', link: '/vote-by-mail' },
 		{ title: 'Election Results', icon: '📊', link: 'live-results' },
 		{ title: 'What’s on the Ballot', icon: '🗳️' },
 		{ title: 'Where to Vote in Person', icon: '📍' },

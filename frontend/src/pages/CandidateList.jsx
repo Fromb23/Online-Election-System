@@ -212,7 +212,7 @@ const CandidateList = () => {
         </button>
       )}
       <button className="back-button" onClick={() => navigate("/voter-dashboard")}>
-        Back to Voter Dashboard
+        Back to Dashboard
       </button>
     </div>
   );
