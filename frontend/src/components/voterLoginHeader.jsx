@@ -13,8 +13,8 @@ const VoterLoginHeader = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [profileIcon, setProfileIcon] = useState("profile-icon.png"); // Default profile icon
-  const dropdownRef = useRef(null); // Ref for the dropdown menu
+  const [profileIcon, setProfileIcon] = useState("profile-icon.png");
+  const dropdownRef = useRef(null); 
 
   // Handle opening/closing the dropdown
   const handleProfileClick = (e) => {
@@ -32,7 +32,7 @@ const VoterLoginHeader = () => {
   // Handle opening/closing the profile modal
   const toggleProfileModal = () => {
     setIsProfileModalOpen(!isProfileModalOpen);
-    setIsUpdatingPassword(false); // Reset password update state when closing
+    setIsUpdatingPassword(false);
   };
 
   // Handle updating the profile icon
@@ -78,7 +78,7 @@ const VoterLoginHeader = () => {
 
   return (
     <header className="voter-header">
-      <p> Welcome {voterInfo?.fullName}</p>
+      <p> Welcome {voterInfo.fullName}</p>
       <h1>Voter Dashboard</h1>
       <div className="profile" onClick={handleProfileClick}>
         <img src={profileIcon} alt="Profile" className="profile-icon" />

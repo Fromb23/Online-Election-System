@@ -1,0 +1,91 @@
+/* Unique class to scope the styles */
+.voter-component {
+	max-width: 900px;
+	margin: 20px auto;
+	padding: 20px;
+  }
+  
+  /* Styling for the header */
+  .voter-component h2 {
+	text-align: center;
+  }
+  
+  /* Search input and buttons container */
+  .voter-component .search-container {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	margin-bottom: 20px;
+  }
+  
+  /* Styling for the search box */
+  .voter-component input[type="text"] {
+	padding: 10px;
+	margin-bottom: 10px;
+	width: 300px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+  }
+  
+  /* Styling for the buttons (search, reset, create new voter) */
+  .voter-component button {
+	padding: 10px 15px;
+	background-color: #008CBA;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	width: 200px;
+	margin-bottom: 10px; /* Ensuring spacing between buttons */
+  }
+  
+  /* Hover effect for the buttons */
+  .voter-component button:hover {
+	background-color: #007B9E;
+  }
+  
+  /* Action links for Update and Delete */
+  .voter-component .action-links a,
+  .voter-component .action-links button {
+	margin-right: 10px;
+	text-decoration: none;
+	color: #008CBA;
+	cursor: pointer;
+  }
+  
+  .voter-component .action-links a:hover,
+  .voter-component .action-links button:hover {
+	color: #005f6a;
+  }
+  
+  /* Styling for the table */
+  .voter-component table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 20px;
+  }
+  
+  .voter-component th,
+  .voter-component td {
+	padding: 10px;
+	text-align: left;
+	border: 1px solid #ddd;
+  }
+  
+  .voter-component th {
+	background-color: #f4f4f4;
+  }
+  
+  /* Responsive table */
+  @media (max-width: 600px) {
+	.voter-component table,
+	.voter-component th,
+	.voter-component td {
+	  font-size: 12px;
+	}
+  
+	.voter-component input[type="text"],
+	.voter-component button {
+	  width: 100%;
+	}
+  }  
