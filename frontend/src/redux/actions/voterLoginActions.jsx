@@ -18,3 +18,15 @@ export const loginVoter = createAsyncThunk(
     }
   }
 );
+
+export const updateVotedStatus = createAsyncThunk(
+  'voter/update',
+  async({ voterId, voted }, { rejectWithValue }) => {
+    try {
+      const res = await api.put(`/voters/${voterId}`, { voted });
+      return res.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || "Error updating voted status");
+    }
+  }
+);

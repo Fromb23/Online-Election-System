@@ -8,6 +8,8 @@ const VoterComponent = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  console.log(voters);
+
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredVoter, setFilteredVoter] = useState(null);
   const [showAllVoters, setShowAllVoters] = useState(true);
@@ -34,32 +36,32 @@ const VoterComponent = () => {
 
   // Handle search by voter ID
   const handleSearch = async () => {
-	if (!searchTerm) {
-	  alert('Please enter a voter ID to search.');
-	  return;
-	}
-  
-	try {
-	  // Fetch voter data
-	  const response = await dispatch(fetchVoter(searchTerm));
-  
-	  if (response.payload && response.payload.voterId) {
-		setFilteredVoter(response.payload);
-		setShowAllVoters(false);
-		localStorage.setItem('searchTerm', searchTerm);
-		localStorage.setItem('filteredVoter', JSON.stringify(response.payload));
-	  } else {
-		alert('Voter not found');
-		handleReset();
-		dispatch(fetchVoters());
-	  }
-	} catch (error) {
-	  console.error('Error fetching voter:', error);
-	  alert('Error fetching voter.');
-	  handleReset();
-	  dispatch(fetchVoters());
-	}
-  };  
+    if (!searchTerm) {
+      alert('Please enter a voter ID to search.');
+      return;
+    }
+
+    try {
+      // Fetch voter data
+      const response = dispatch(fetchVoter(searchTerm));
+
+      if (response.payload && response.payload.voterId) {
+        setFilteredVoter(response.payload);
+        setShowAllVoters(false);
+        localStorage.setItem('searchTerm', searchTerm);
+        localStorage.setItem('filteredVoter', JSON.stringify(response.payload));
+      } else {
+        alert('Voter not found');
+        handleReset();
+        dispatch(fetchVoters());
+      }
+    } catch (error) {
+      console.error('Error fetching voter:', error);
+      alert('Error fetching voter.');
+      handleReset();
+      dispatch(fetchVoters());
+    }
+  };
 
   // Reset to show all voters
   const handleReset = () => {
@@ -133,6 +135,9 @@ const VoterComponent = () => {
                 <th>ID</th>
                 <th>Name</th>
                 <th>Voted</th>
+                <th>County</th>
+                <th>Constituency</th>
+                <th>Polling Station</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -142,6 +147,9 @@ const VoterComponent = () => {
                   <td>{voter.voterId}</td>
                   <td>{voter.fullName}</td>
                   <td>{voter.voted ? 'Yes' : 'No'}</td>
+                  <td>{voter.county}</td>
+                  <td>{voter.constituency}</td>
+                  <td>{voter.pollingStation}</td>
                   <td className="action-links">
                     <Link to={`/admin/voters/update/${voter.voterId}`}>Update</Link>
                     <a style={{ marginRight: "10px" }} href="#" onClick={() => handleDelete(voter.voterId)}>Delete</a>
@@ -160,6 +168,10 @@ const VoterComponent = () => {
                 <tr>
                   <th>ID</th>
                   <th>Name</th>
+                  <th>Voted</th>
+                  <th>County</th>
+                  <th>Constituency</th>
+                  <th>Polling Station</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -167,6 +179,10 @@ const VoterComponent = () => {
                 <tr>
                   <td>{filteredVoter.voterId}</td>
                   <td>{filteredVoter.fullName}</td>
+                  <td>{filteredVoter.voted ? 'Yes' : 'No'}</td>
+                  <td>{filteredVoter.county}</td>
+                  <td>{filteredVoter.constituency}</td>
+                  <td>{filteredVoter.pollingStation}</td>
                   <td className="action-links">
                     <Link to={`/admin/voters/update/${filteredVoter.voterId}`}>Update</Link>
                     <a href="#" onClick={() => handleDelete(filteredVoter.voterId)}>Delete</a>

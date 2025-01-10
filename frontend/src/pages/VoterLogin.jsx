@@ -15,7 +15,7 @@ const VoterLogin = () => {
     e.preventDefault();
 
     try {
-      const resultAction = await dispatch(loginVoter({ voterId, password, rememberMe }));
+      const resultAction = dispatch(loginVoter({ voterId, password, rememberMe }));
 
       if (loginVoter.fulfilled.match(resultAction)) {
         const {is_first_login } = resultAction.payload;

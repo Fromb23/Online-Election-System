@@ -16,7 +16,7 @@ const TimerComponent = () => {
         votingEnd: new Date(parseInt(savedVotingEnd, 10)),
       };
     } else {
-      const votingStart = new Date(currentTime.getTime() + 1 * 60 * 1000); // 1 minutes from now
+      const votingStart = new Date(currentTime.getTime() + 0.1 * 60 * 1000); // 1 minutes from now
       const votingEnd = new Date(votingStart.getTime() + 12 * 60 * 60 * 1000); // 12 hours after voting start
       localStorage.setItem("votingStart", votingStart.getTime());
       localStorage.setItem("votingEnd", votingEnd.getTime());
