@@ -48,7 +48,7 @@ const AuthVoterLayout = () => {
             {/* Render VoterTracking if the voter is logged in */}
             <VoterTracking
                 voterId={voterInfo.voterId}
-                category={null} // You can pass the selected category here
+                category={null}
                 setVotedCategories={() => {}} // You can pass the necessary setter functions here
                 setVotes={() => {}}
             />

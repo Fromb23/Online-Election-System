@@ -62,9 +62,6 @@ const VoterLoginHeader = () => {
 
   // Handle logout
   const handleLogout = () => {
-    localStorage.removeItem("voterInfo");
-    localStorage.removeItem("token");
-    localStorage.removeItem("votes");
     dispatch(logoutVoter());
   };
 

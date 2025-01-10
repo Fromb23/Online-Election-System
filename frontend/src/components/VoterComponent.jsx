@@ -43,7 +43,8 @@ const VoterComponent = () => {
 
     try {
       // Fetch voter data
-      const response = dispatch(fetchVoter(searchTerm));
+      const response = await dispatch(fetchVoter(searchTerm));
+      console.log("Res search voter frontend:, ", response);
 
       if (response.payload && response.payload.voterId) {
         setFilteredVoter(response.payload);

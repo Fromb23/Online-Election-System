@@ -14,6 +14,9 @@ const voterLoginSlice = createSlice({
 	error: null }, reducers: {
     logoutVoter: (state) => {
       state.voterInfo = null;
+      localStorage.removeItem("voterInfo");
+      localStorage.removeItem("authToken");
+      localStorage.removeItem("voterId");
     },
     setVotingStatus: (state, action) => {
       state.votingStatus = action.payload;
