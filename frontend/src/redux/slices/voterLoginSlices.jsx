@@ -31,7 +31,7 @@ const voterLoginSlice = createSlice({
       .addCase(loginVoter.fulfilled, (state, action) => {
         state.loading = false;
         state.voterInfo = action.payload;
-        console.log(state.voterInfo);
+        console.log("Voter login slice", state.voterInfo);
         localStorage.setItem('voterInfo', JSON.stringify(action.payload));
       })
       .addCase(loginVoter.rejected, (state, action) => {

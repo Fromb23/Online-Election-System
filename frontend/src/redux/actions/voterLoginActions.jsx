@@ -14,6 +14,7 @@ export const loginVoter = createAsyncThunk(
 
       return { ...data, is_first_login: data.is_first_login };
     } catch (error) {
+      console.log("Login failed action file:,", error);
       return rejectWithValue(error.response?.data?.message || 'Login failed');
     }
   }
