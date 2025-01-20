@@ -9,12 +9,15 @@ const voterLoginSlice = createSlice({
   name: 'voter',
   initialState: { 
 	voterInfo: persistedVoterInfo,
+  voterName: null,
   votingStatus: null,
 	loading: false,
 	error: null }, reducers: {
     logoutVoter: (state) => {
       state.voterInfo = null;
-      localStorage.clear();
+      localStorage.removeItem("voterInfo");
+      localStorage.removeItem("authToken");
+      localStorage.removeItem("voterId");
     },
     setVotingStatus: (state, action) => {
       state.votingStatus = action.payload;
@@ -32,7 +35,7 @@ const voterLoginSlice = createSlice({
       .addCase(loginVoter.fulfilled, (state, action) => {
         state.loading = false;
         state.voterInfo = action.payload;
-        console.log(state.voterInfo);
+        console.log("Voter login slice", state.voterInfo);
         localStorage.setItem('voterInfo', JSON.stringify(action.payload));
       })
       .addCase(loginVoter.rejected, (state, action) => {

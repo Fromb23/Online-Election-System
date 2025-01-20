@@ -57,7 +57,8 @@ const voterSlice = createSlice({
 			})
 			.addCase(deleteVoter.fulfilled, (state, action) => {
 				state.loading = false;
-				state.voters = state.voters.filter((voter) => voter.id !== action.payload);
+				const newState = state.list.filter((voter) => voter.voterId !== action.payload);
+				state.list = newState;
 			})
 			.addCase(deleteVoter.rejected, (state, action) => {
 				state.loading = false;
@@ -71,7 +72,7 @@ const voterSlice = createSlice({
 			})
 			.addCase(createVoter.fulfilled, (state, action) => {
 				state.loading = false;
-				state.list.push(action.payload);
+				state.list.push(action.payload.voter);
 				state.success = true;
 			})
 			.addCase(createVoter.rejected, (state, action) => {

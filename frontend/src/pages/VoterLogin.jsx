@@ -15,10 +15,12 @@ const VoterLogin = () => {
     e.preventDefault();
 
     try {
+      // Wait for the promise to resolve
       const resultAction = await dispatch(loginVoter({ voterId, password, rememberMe }));
-
+    
+      // Now you can safely access resultAction.payload
       if (loginVoter.fulfilled.match(resultAction)) {
-        const {is_first_login } = resultAction.payload;
+        const { is_first_login } = resultAction.payload;
         localStorage.setItem('voterId', voterId);
         if (is_first_login) {
           navigate(`/voters/update-password/${voterId}`);
@@ -27,10 +29,14 @@ const VoterLogin = () => {
           navigate('/voter-dashboard');
         }
       } else {
-        alert(resultAction.payload.message || 'Login failed');
+        // Handle rejected or failed action
+        const errorMessage = resultAction.payload?.message || 'Invalid username or passwords';
+        alert(errorMessage);
       }
     } catch (error) {
+      // Handle unexpected errors
       alert('An error occurred during login');
+      console.log("Login failed error:", error);
     }
   };
 

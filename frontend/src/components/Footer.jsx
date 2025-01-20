@@ -10,6 +10,8 @@ const Footer = () => {
 
 const footerStyles = {
 	background: '#00274D',
+	display: 'flex',
+	flex: 1,
 	color: '#fff',
 	padding: '10px',
 	textAlign: 'center',

@@ -24,6 +24,7 @@ import VoterTracking from './components/VoterTracking'; // Import VoterTracking
 import TimerComponent from './components/TimerComponent';
 import ElectionPositionsPage from './pages/ElectionPositionsPage';
 import LiveResultsPage from './pages/LiveResultsPage';
+import VotebyMail from './components/VoteByMail';
 
 const AuthAdminLayout = () => {
     const { userInfo } = useSelector((state) => state.user);
@@ -47,7 +48,7 @@ const AuthVoterLayout = () => {
             {/* Render VoterTracking if the voter is logged in */}
             <VoterTracking
                 voterId={voterInfo.voterId}
-                category={null} // You can pass the selected category here
+                category={null}
                 setVotedCategories={() => {}} // You can pass the necessary setter functions here
                 setVotes={() => {}}
             />
@@ -84,6 +85,7 @@ function App() {
                 <Route path="/voter-login" element={<VoterLogin />} />
                 <Route path="/apply-voting" element={<ElectionPositionsPage />} />
                 <Route path="/live-results" element={<LiveResultsPage />} />
+                <Route path="/vote-by-mail" element={<VotebyMail />} />
 
                 {/* Main Site Routes */}
                 <Route

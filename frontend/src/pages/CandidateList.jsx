@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { submitVote } from "../redux/actions/createVoteActions";
 import { fetchCandidateCategories } from "../redux/actions/createCandidateActions";
+import { updateVotedStatus } from "../redux/actions/voterLoginActions";
 import "../styles/CandidateList.css";
 
 const CandidateList = () => {
@@ -91,7 +92,7 @@ const CandidateList = () => {
     }
 
     try {
-      await dispatch(
+      dispatch(
         submitVote({
           voterId,
           candidateId: categoryVotes.candidateId,
@@ -126,6 +127,9 @@ const CandidateList = () => {
 
       fetchedVotes.push(newVote);
       localStorage.setItem("fetchedVotes", JSON.stringify({ fetchedVotes }));
+
+      // Updating voters table to voted
+      dispatch(updateVotedStatus({ voterId, voted: true }));
 
       alert(`Your vote for ${category.name} has been recorded!`);
     } catch (err) {
@@ -212,7 +216,7 @@ const CandidateList = () => {
         </button>
       )}
       <button className="back-button" onClick={() => navigate("/voter-dashboard")}>
-        Back to Voter Dashboard
+        Back to Dashboard
       </button>
     </div>
   );

@@ -1,119 +1,203 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchVoters, createVoter, updateVoter, deleteVoter } from '../redux/actions/voterActions';
+import { fetchVoters, fetchVoter, deleteVoter } from '../redux/actions/voterActions';
 
 const VoterComponent = () => {
-	const { selectedVoter, list:voters, loading, error } = useSelector((state) => state.voters);
-	const dispatch = useDispatch();
-	const navigate = useNavigate();
+  const { selectedVoter, list: voters, loading, error } = useSelector((state) => state.voters);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-	useEffect(() => {
-		dispatch(fetchVoters());
-	}, [dispatch]);
+  console.log(voters);
 
-	const handleCreate = () => {
-		navigate('/voters/create');
-	};
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredVoter, setFilteredVoter] = useState(null);
+  const [showAllVoters, setShowAllVoters] = useState(true);
 
-	// const handleUpdate = (voterId) => {
-	// 	const updatedVoter = { name: 'Updated Name' };
-	// 	dispatch(updateVoter({ voterId, updatedVoter }));
-	// };
-	const handleDelete = (voterId) => {
-		dispatch(deleteVoter(voterId));
-	};
+  // Fetch voters on initial load
+  useEffect(() => {
+    dispatch(fetchVoters());
+  }, [dispatch]);
 
-	if (loading) return <p>Loading voters...</p>;
+  // Check for saved search term and result in localStorage
+  useEffect(() => {
+    const savedSearchTerm = localStorage.getItem('searchTerm');
+    const savedFilteredVoter = localStorage.getItem('filteredVoter');
 
-	console.log(selectedVoter);
-	console.log(error);
+    if (savedSearchTerm) {
+      setSearchTerm(savedSearchTerm);
+    }
 
+    if (savedFilteredVoter) {
+      setFilteredVoter(JSON.parse(savedFilteredVoter));
+      setShowAllVoters(false); // Show the filtered voter result
+    }
+  }, []);
 
-	return (
-		<div>
-		<h2>Voters Management</h2>
-		<p>Registered Voters: <strong>{voters.length}</strong></p>
+  // Handle search by voter ID
+  const handleSearch = async () => {
+    if (!searchTerm) {
+      alert('Please enter a voter ID to search.');
+      return;
+    }
 
-		<div>
-		<button
-		onClick={handleCreate}
-		style={{
-			padding: '10px 15px',
-				backgroundColor: '#008CBA',
-				color: 'white',
-				border: 'none',
-				borderRadius: '5px',
-				cursor: 'pointer',
-				float: 'right',
-				marginBottom: '10px'
-		}}
-		>
-		Create New Voter
-		</button>
-		</div>
+    try {
+      // Fetch voter data
+      const response = await dispatch(fetchVoter(searchTerm));
+      console.log("Res search voter frontend:, ", response);
 
-		{voters.length === 0 ? (
-			<p>No voters found.</p>
-		
-		) : (
-			<table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '20px' }}>
-			<thead>
-			<tr style={{ backgroundColor: '#f4f4f4' }}>
-			<th style={{ padding: '8px', border: '1px solid #ddd' }}>Name</th>
-			<th style={{ padding: '8px', border: '1px solid #ddd' }}>Voter ID</th>
-			<th style={{ padding: '8px', border: '1px solid #ddd' }}>Vote Status</th>
-			<th style={{ padding: '8px', border: '1px solid #ddd' }}>Update</th>
-			<th style={{ padding: '8px', border: '1px solid #ddd' }}>Delete</th>
-			</tr>
-			</thead>
-			<tbody>
-			{voters.map((voter) => (
-				<tr key={voter.voterId}>
-				<td style={{ padding: '8px', border: '1px solid #ddd' }}>{voter.fullName}</td>
-				<td style={{ padding: '8px', border: '1px solid #ddd' }}>{voter.voterId}</td>
-				<td style={{ padding: '8px', border: '1px solid #ddd' }}>{voter.voted? 'Yes' : 'No'}</td>
-				<td style={{ padding: '8px', border: '1px solid #ddd', textAlign: 'center' }}>
-				<Link
-				to={`/admin/voters/update/${voter.voterId}`}
-				style={{
-					color: '#4CAF50',
-						textDecoration: 'underline',
-						padding: '6px 12px',
-				}}
-				>
-				Update
-				</Link>
-				</td>
-				<td style={{ padding: '8px', border: '1px solid #ddd', textAlign: 'center' }}>
-				<a
-				href="#"
-				onClick={() => handleDelete(voter.voterId)}
-				style={{
-					color: '#F44336',
-						textDecoration: 'underline',
-						padding: '6px 12px',
-				}}
-				>
-				Delete
-				</a>
-				</td>
-				</tr>
-			))}
-			</tbody>
-			</table>
-		)}
+      if (response.payload && response.payload.voterId) {
+        setFilteredVoter(response.payload);
+        setShowAllVoters(false);
+        localStorage.setItem('searchTerm', searchTerm);
+        localStorage.setItem('filteredVoter', JSON.stringify(response.payload));
+      } else {
+        alert('Voter not found');
+        handleReset();
+        dispatch(fetchVoters());
+      }
+    } catch (error) {
+      console.error('Error fetching voter:', error);
+      alert('Error fetching voter.');
+      handleReset();
+      dispatch(fetchVoters());
+    }
+  };
 
-		{selectedVoter && (
-			<div style={{ marginTop: '20px' }}>
-			<h3>Selected Voter Details</h3>
-			<p><strong>Name:</strong> {selectedVoter.voter}</p>
-			<p><strong>ID:</strong> {selectedVoter.voterId}</p>
-			</div>
-		)}
-		</div>
-	);
+  // Reset to show all voters
+  const handleReset = () => {
+    setShowAllVoters(true);
+    setFilteredVoter(null);
+    setSearchTerm('');
+    localStorage.removeItem('searchTerm');
+    localStorage.removeItem('filteredVoter');
+  };
 
+  const handleInputChange = (event) => {
+    const newSearchTerm = event.target.value;
+    setSearchTerm(newSearchTerm);
+    localStorage.setItem('searchTerm', newSearchTerm); // Save search term to localStorage
+  };
+
+  const handleCreate = () => {
+    navigate('/voters/create');
+  };
+
+  const handleDelete = (voterId) => {
+    if (window.confirm('Are you sure you want to delete this voter?')) {
+      dispatch(deleteVoter(voterId));
+    }
+  };
+
+  if (loading) return <p>Loading voters...</p>;
+  if (error) return <p>Error: {error}</p>;
+
+  return (
+    <div>
+      <h2>Voters Management</h2>
+      <p>Registered Voters: <strong>{voters.length}</strong></p>
+
+      {/* Search and Reset */}
+      <div>
+        <input
+          type="text"
+          placeholder="Search for a voter by ID"
+          value={searchTerm}
+          onChange={handleInputChange}
+        />
+        <button onClick={handleSearch}>Search</button>
+        <button onClick={handleReset}>Reset</button>
+      </div>
+
+      {/* Create Button */}
+      <button
+        onClick={handleCreate}
+        style={{
+          padding: '10px 15px',
+          backgroundColor: '#008CBA',
+          color: 'white',
+          border: 'none',
+          borderRadius: '5px',
+          cursor: 'pointer',
+          float: 'right',
+          marginBottom: '10px',
+        }}
+      >
+        Create New Voter
+      </button>
+
+      {/* Display Voters */}
+      {showAllVoters ? (
+        <div>
+          <h3>All Registered Voters</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Voted</th>
+                <th>County</th>
+                <th>Constituency</th>
+                <th>Polling Station</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {voters.map((voter) => (
+                <tr key={voter.voterId}>
+                  <td>{voter.voterId}</td>
+                  <td>{voter.fullName}</td>
+                  <td>{voter.voted ? 'Yes' : 'No'}</td>
+                  <td>{voter.county}</td>
+                  <td>{voter.constituency}</td>
+                  <td>{voter.pollingStation}</td>
+                  <td className="action-links">
+                    <Link to={`/admin/voters/update/${voter.voterId}`}>Update</Link>
+                    <a style={{ marginRight: "10px" }} href="#" onClick={() => handleDelete(voter.voterId)}>Delete</a>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <div>
+          <h3>Search Result</h3>
+          {filteredVoter ? (
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Voted</th>
+                  <th>County</th>
+                  <th>Constituency</th>
+                  <th>Polling Station</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{filteredVoter.voterId}</td>
+                  <td>{filteredVoter.fullName}</td>
+                  <td>{filteredVoter.voted ? 'Yes' : 'No'}</td>
+                  <td>{filteredVoter.county}</td>
+                  <td>{filteredVoter.constituency}</td>
+                  <td>{filteredVoter.pollingStation}</td>
+                  <td className="action-links">
+                    <Link to={`/admin/voters/update/${filteredVoter.voterId}`}>Update</Link>
+                    <a href="#" onClick={() => handleDelete(filteredVoter.voterId)}>Delete</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          ) : (
+            <p>No voter found</p>
+          )}
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default VoterComponent;

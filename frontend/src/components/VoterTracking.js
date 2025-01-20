@@ -11,10 +11,11 @@ const VoterTracking = ({ voterId }) => {
     if (voterId) {
       const savedData = JSON.parse(localStorage.getItem("votes")) || {};
       const categoryVotes = savedData.votes || {};
+      console.log("Category data on voter tracking: ", categoryVotes);
 
       if (Object.keys(categoryVotes).length === 0) {
         console.log("Fetching vote data from backend...");
-        dispatch(fetchVoterVotingStatus(voterId));
+        // dispatch(fetchVoterVotingStatus(voterId));
       } else {
         console.log("Local Votes:", categoryVotes);
       }

@@ -10,6 +10,8 @@ const AdminLogin = ({ setAdminName }) => {
 	const navigate = useNavigate();
 	const { loading, error, userInfo } = useSelector((state) => state.user);
 
+	console.log("Admin user Info", userInfo)
+
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
