@@ -30,7 +30,7 @@ const VoterLogin = () => {
         }
       } else {
         // Handle rejected or failed action
-        const errorMessage = resultAction.payload?.message || 'Login failed';
+        const errorMessage = resultAction.payload?.message || 'Invalid username or passwords';
         alert(errorMessage);
       }
     } catch (error) {

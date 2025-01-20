@@ -9,6 +9,7 @@ const voterLoginSlice = createSlice({
   name: 'voter',
   initialState: { 
 	voterInfo: persistedVoterInfo,
+  voterName: null,
   votingStatus: null,
 	loading: false,
 	error: null }, reducers: {

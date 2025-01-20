@@ -5,7 +5,7 @@ import { logoutVoter } from "../redux/slices/voterLoginSlices";
 import "../styles/VoterLoginHeader.css";
 
 const VoterLoginHeader = () => {
-  const { voterInfo } = useSelector((state) => state.voter);
+  const { voterInfo, fullName } = useSelector((state) => state.voter);
   const dispatch = useDispatch();
   const [showDropdown, setShowDropdown] = useState(false);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
@@ -14,7 +14,7 @@ const VoterLoginHeader = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [profileIcon, setProfileIcon] = useState("profile-icon.png");
-  const dropdownRef = useRef(null); 
+  const dropdownRef = useRef(null);
 
   // Handle opening/closing the dropdown
   const handleProfileClick = (e) => {
@@ -75,8 +75,8 @@ const VoterLoginHeader = () => {
 
   return (
     <header className="voter-header">
-      <p> Welcome {voterInfo.fullName}</p>
-      <h1>Voter Dashboard</h1>
+      <p> Welcome </p>
+      <h1>Voter Dashboard {fullName}</h1>
       <div className="profile" onClick={handleProfileClick}>
         <img src={profileIcon} alt="Profile" className="profile-icon" />
         {showDropdown && (
