@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+ HEAD
 .vote-by-mail-container {
     max-width: 500px;
     margin: 30px auto;
@@ -36,7 +36,7 @@
     cursor: pointer;
   }
   
-=======
+
 .votebymail-info-container {
   max-width: 800px;
   margin: 0 auto;
@@ -125,4 +125,3 @@ footer a {
 footer a:hover {
   text-decoration: underline;
 }
->>>>>>> fc9f5d3274808be1302e36ca02d5d54aa150aba4
