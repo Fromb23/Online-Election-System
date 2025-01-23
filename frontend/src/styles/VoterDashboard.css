@@ -52,7 +52,7 @@
 	border-radius: 4px;
   }
   
-  /* Main content area */
+  /* Additional Styles for Main content area */
   .main-content {
 	padding: 30px;
 	text-align: center;
@@ -111,7 +111,7 @@
 	margin-bottom: 15px;
   }
   
-  /* Footer styles */
+  /* styles for the footer */
   .voter-footer {
 	text-align: center;
 	background-color: #333;
