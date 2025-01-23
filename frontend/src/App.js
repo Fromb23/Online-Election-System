@@ -37,7 +37,7 @@ const AuthAdminLayout = () => {
         </AdminDashboardLayout>
     );
 };
-
+// AuthVoterLayout component
 const AuthVoterLayout = () => {
     const { voterInfo } = useSelector((state) => state.voter);
     if (!voterInfo) {
@@ -106,7 +106,7 @@ function App() {
         </Router>
     );
 }
-
+// Styles
 const containerStyles = {
     display: 'flex',
     flexDirection: 'column',
