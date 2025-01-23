@@ -26,7 +26,7 @@ const AdminLogin = ({ setAdminName }) => {
 			navigate('/admin/dashboard');
 		}
 	}, [userInfo, navigate]);
-
+// styles for the AdminLogin component
 	const containerStyles = {
 		display: 'flex',
 		flexDirection: 'column',
