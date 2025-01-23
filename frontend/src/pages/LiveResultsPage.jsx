@@ -6,7 +6,7 @@ const LiveResultsPage = () => {
   const [candidates, setCandidates] = useState([]);
   const [totalVotes, setTotalVotes] = useState(0);
 
-  // Fetch Presidential candidates
+  // Fetch all Presidential candidates
   useEffect(() => {
     const fetchPresidentialCandidates = async () => {
       try {
@@ -28,27 +28,12 @@ const LiveResultsPage = () => {
   useEffect(() => {
     const fetchVotes = async () => {
       try {
-        const res = await api.get('/votes');
-        console.log("Total live votes", res.data);
-
-        // Update candidates with their vote counts
-        const updatedCandidates = candidates.map((candidate) => {
-          const votesForCandidate = res.data.filter(
-            (vote) => vote.CandidateId === candidate.candidateId && vote.status === true
-          );
-          return {
-            ...candidate,
-            votes: votesForCandidate.length,
-          };
-        });
-
-        setCandidates(updatedCandidates);
-
-        // Calculate total votes
-        const total = updatedCandidates.reduce((sum, candidate) => sum + candidate.votes, 0);
-        setTotalVotes(total);
+        const response = await fetch('/api/votes');
+        const data = await response.json();
+        // Assuming the data is an array of votes
+        setCandidates(data);
       } catch (error) {
-        console.error("Votes error:", error);
+        console.error("Error fetching votes:", error);
       }
     };
 
@@ -61,7 +46,7 @@ const LiveResultsPage = () => {
   useEffect(() => {
     const total = candidates.reduce((sum, candidate) => sum + candidate.votes, 0);
     setTotalVotes(total);
-  }, [candidates]);
+  }, [candidates]); // ✅ Now runs whenever candidates updates
 
   // Determine the leading and trailing candidates
   const leadingCandidate = candidates.length > 0
