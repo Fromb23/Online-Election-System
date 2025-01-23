@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchDashboardStats, fetchVoteTally } from '../redux/actions/dashboardActions';
 import { Bar } from 'react-chartjs-2';
 import '../styles/dashboard.css';
-
+// Dashboard component
 const Dashboard = () => {
 	const dispatch = useDispatch();
 	const {
@@ -18,7 +18,7 @@ const Dashboard = () => {
 		dispatch(fetchDashboardStats());
 		dispatch(fetchVoteTally());
 	}, [dispatch]);
-
+// renderCharts function
 	const renderCharts = () => {
 		return voteTally.map((position, index) => (
 		  <div key={index} className="chart-container">
