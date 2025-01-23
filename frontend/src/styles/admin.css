@@ -1,17 +1,17 @@
 
-/* admin.css - Styles for the Admin Dashboard */
+/* Styles for the Admin Dashboard */
 .admin-dashboard {
 	display: flex;
 	flex-direction: column;
 	height: 100vh;
 }
-
+/* Header styles */
 .admin-container {
 	display: flex;
 	flex: 1;
 	background-color: #f4f4f4;
 }
-
+/* Sidebar styles */
 .admin-content {
 	flex: 1;
 	padding: 20px;

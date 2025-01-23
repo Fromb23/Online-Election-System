@@ -70,9 +70,9 @@ CREATE DATABASE online_election;
 - **Branching**: Use feature branches and merge via pull requests.
 
 ## 📽️ Project Demo
-📹 **Video Demo**: *(Provide YouTube/Drive link here)*
+📹 **Video Demo**: *(https://youtu.be/cvBlA2X0Nk8?si=TL9PBHrYnt_L5UgK)*
 
-🔗 **GitHub Repository**: *(Provide GitHub repo link here)*
+🔗 **GitHub Repository**: *(https://github.com/Fromb23/Online-Election-System.git)*
 
 ## 📝 Future Enhancements
 - Implement **blockchain** for improved vote security.
