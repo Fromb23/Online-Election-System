@@ -20,7 +20,7 @@ export const fetchCandidatesAndCategories = createAsyncThunk(
   }
 );
 
-// Async thunk to create a candidate
+// Async thunk to create a candidate (used for adding a new candidate)
 export const createCandidate = createAsyncThunk(
   'candidateManagement/createCandidate',
   async (candidateData, { rejectWithValue }) => {
@@ -48,7 +48,7 @@ export const fetchCandidateById = createAsyncThunk(
   }
 );
 
-// Async thunk to update a candidate's details
+// Async thunk to update a candidate's details (used for updating candidate data)
 export const updateCandidate = createAsyncThunk(
   'candidateManagement/updateCandidate',
   async ({ id, candidate }, { rejectWithValue }) => {
@@ -62,7 +62,7 @@ export const updateCandidate = createAsyncThunk(
   }
 );
 
-// Async thunk to delete a candidate
+// Async thunk to delete a candidate by ID
 export const deleteCandidate = createAsyncThunk(
   'candidateManagement/deleteCandidate',
   async (candidateId, { rejectWithValue }) => {
@@ -89,7 +89,7 @@ export const fetchPartiesAndCategories = createAsyncThunk(
   }
 );
 
-// In createCandidateActions.js
+// In createCandidateActions.js file, add the following code to fetch candidates and categories:
 export const fetchCandidates = createAsyncThunk(
   'candidate/fetchCandidates',
   async (_, { rejectWithValue }) => {
