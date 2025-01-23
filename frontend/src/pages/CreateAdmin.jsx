@@ -17,7 +17,7 @@ const CreateAdmin = () => {
 		dispatch(createAdmin({ username, email, password}));
 		console.log("Admin created");
 };
-
+// useEffect hook to navigate to the admin login page when the admin is successfully created
 useEffect(() => {
 	if (success) {
 	navigate('/admin/login');
@@ -25,7 +25,7 @@ useEffect(() => {
 }, [success, navigate]);
 
 console.log("create admin return value check");
-
+// Create a form to create an admin
 return (
 	<div>
 		<h1>Create Admin</h1>
