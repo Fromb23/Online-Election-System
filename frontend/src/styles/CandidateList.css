@@ -1,4 +1,4 @@
-/* CandidateList.css */
+/* Styles for CandidateList.css */
 
 body {
 	font-family: Arial, sans-serif;
@@ -17,7 +17,7 @@ body {
 	padding: 1rem;
 	vertical-align: middle;
   }
-  
+  /* Candidate list title styles */
   h1 {
 	text-align: center;
 	color: #4caf50;
@@ -55,7 +55,7 @@ body {
 	vertical-align: middle;
 	text-align: left;
   }
-  
+  /* Vote button styles */
   .vote-button {
 	background-color: #4caf50;
 	color: white;
