@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const AdminLogin = ({ setAdminName }) => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const { loading, error, userInfo } = useSelector((state) => state.user);
+	const { error, userInfo } = useSelector((state) => state.user);
 
 	console.log("Admin user Info", userInfo)
 

@@ -28,7 +28,7 @@ const CandidateList = () => {
     const savedData = JSON.parse(localStorage.getItem("fetchedVotes")) || {};
     const savedVotes = savedData.fetchedVotes || [];
 
-    // Check if the voter has already voted in the current category (status is true)
+    // Check if the voter has voted in the current category (status is true)
     const votedInCategory = savedVotes.find(
       (vote) => vote.voteCategory.name === category.name && vote.status === true
     );
