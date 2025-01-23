@@ -29,7 +29,7 @@ export const deleteParty = createAsyncThunk(
   'party/deleteParty',
   async (partyId, { rejectWithValue }) => {
     try {
-      const response = await api.delete(`/parties/${partyId}`);
+      await api.delete(`/parties/${partyId}`);
       return partyId;
     } catch (err) {
       return rejectWithValue(err.message);
