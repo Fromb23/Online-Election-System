@@ -32,7 +32,7 @@ router.get("/status/:voterId", async (req, res) => {
     });
 
     if (votes.length === 0) {
-      return res.status(404).json({ error: "No votes found for this voter" });
+      return
     }
 
     res.status(200).json(votes);

@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const router = express.Router();
 const { Voter } = require('../models');
+const transporter = require('../utils/mailer');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -48,6 +49,49 @@ router.post('/', async (req, res) => {
             password: hashedPassword,
             dateofbirth,
         });
+
+		const mailOptions = {
+			from: `"Election System" <${process.env.EMAIL_USER}>`,
+			to: email,
+		subject: 'REGISTRATION TO VOTE IN THE ELECTION',
+			html: `
+			  <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #ddd; border-radius: 8px; padding: 20px; background-color: #f9f9f9;">
+				<h2 style="color: #333; text-align: center;">Welcome, ${fullName}!</h2>
+				<p style="font-size: 16px; line-height: 1.5; color: #555;">
+				  You have been successfully registered as a voter in our system. Below are your login credentials:
+				</p>
+				<div style="padding: 15px; background-color: #f0f0f0; border-radius: 5px; margin: 20px 0; font-size: 16px;">
+				  <p><strong>Voter ID:</strong> ${voterId}</p>
+				  <p><strong>Password:</strong> ${randomPassword}</p>
+				</div>
+				<p style="font-size: 16px; line-height: 1.5; color: #555;">
+				  Please log in to the system and <strong>change your password</strong> for security purposes.
+				</p>
+				<a 
+				  href="http://localhost:3000/voter-login" 
+				  style="display: inline-block; padding: 10px 20px; color: white; background-color: #007bff; text-decoration: none; border-radius: 5px; text-align: center; margin-top: 20px;"
+				>
+				  Log In Now
+				</a>
+				<p style="font-size: 14px; color: #777; margin-top: 20px;">
+				  If you have any questions or encounter any issues, feel free to contact us at 
+				  <a href="mailto:support@your-election-system.com" style="color: #007bff;">support@your-election-system.com</a>.
+				</p>
+				<hr style="border: none; border-top: 1px solid #ddd; margin: 20px 0;">
+				<p style="font-size: 12px; color: #aaa; text-align: center;">
+				  &copy; 2025 Election System. All Rights Reserved.
+				</p>
+			  </div>
+			`,
+		  };
+
+		transporter.sendMail(mailOptions, (error, info) => {
+			if (error) {
+				console.log('Error sending email:', error);
+			} else {
+				console.log('Email sent:', info.response);
+			}
+		})
 
         res.status(201).json({
             message: 'Voter created successfully.',

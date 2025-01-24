@@ -88,12 +88,13 @@ router.get('/:candidateId', async (req, res) => {
 router.get('/candidateCategory/:voteCategoryName', async (req, res) => {
 	// Extract voteCategoryName from URL parameters
 	const { voteCategoryName } = req.params;
-	console.log("Received voteCategoryName: ", voteCategoryName);
+	const decodeVoteCategoryName = decodeURIComponent(voteCategoryName);
+	console.log("Received voteCategoryName: ", decodeVoteCategoryName);
   
 	try {
 	  // Find the category by its name and retrieve the voteCategoryId
 	  const category = await VoteCategory.findOne({
-		where: { name: voteCategoryName },
+		where: { name: decodeVoteCategoryName },
 	  });
   
 	  // If the category does not exist, return an error
