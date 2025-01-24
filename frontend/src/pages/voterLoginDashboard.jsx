@@ -6,6 +6,7 @@ import VoterLoginHeader from '../components/voterLoginHeader';
 import VoterLoginFooter from '../components/voterLoginFooter';
 import VoterTracking from '../components/VoterTracking';
 import CandidateCard from "../components/CandidateCard";
+import Spinner from "../components/Spinner";
 import { useSelector, useDispatch } from 'react-redux';
 import TimerComponent from '../components/TimerComponent';
 import '../styles/VoterDashboard.css';
@@ -77,7 +78,7 @@ const VoterLoginDashboard = () => {
             </div>
           ))}
         </div>
-        {loading && <p>Loading candidates...</p>}
+        {loading && <Spinner />}
         {error && <p style={{ color: "red" }}>{error}</p>}
         {selectedCategory && (
           <div>

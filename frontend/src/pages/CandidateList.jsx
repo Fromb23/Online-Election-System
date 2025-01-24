@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { submitVote } from "../redux/actions/createVoteActions";
 import { fetchCandidateCategories } from "../redux/actions/createCandidateActions";
 import { updateVotedStatus } from "../redux/actions/voterLoginActions";
+import Spinner from "../components/Spinner";
 import "../styles/CandidateList.css";
 
 const CandidateList = () => {
@@ -164,9 +165,13 @@ const CandidateList = () => {
   return (
     <div className="candidate-list">
       <h1>{category.name} Category</h1>
-      {loading && <p>Loading candidates...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {!loading && !error && candidates && candidates.length > 0 ? (
+  
+      {loading ? (
+        <Spinner /> // Show the spinner while loading
+      ) : error ? (
+        <p style={{ color: "red" }}>{error}</p> // Show the error message if there's an error
+      ) : candidates && candidates.length > 0 ? (
+        // Show candidates if available and no error
         <table>
           <thead>
             <tr>
@@ -208,18 +213,20 @@ const CandidateList = () => {
           </tbody>
         </table>
       ) : (
-        <p>No candidates found for this category.</p>
+        <p>No candidates found for this category.</p> // Show if no candidates are found
       )}
+  
       {votes.candidateId && !hasVotedInCategory && (
         <button className="confirm-button" onClick={handleConfirmVote}>
           Confirm Vote
         </button>
       )}
+  
       <button className="back-button" onClick={() => navigate("/voter-dashboard")}>
         Back to Dashboard
       </button>
     </div>
-  );
+  );  
 };
 
 export default CandidateList;

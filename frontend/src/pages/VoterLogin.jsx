@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loginVoter } from '../redux/actions/voterLoginActions';
+import Spinner from '../components/Spinner';
 import { useNavigate } from 'react-router-dom';
 import '../styles/VoterLogin.css';
 
@@ -10,9 +11,12 @@ const VoterLogin = () => {
   const [voterId, setVoterId] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setLoading(true);
 
     try {
       // Wait for the promise to resolve
@@ -37,6 +41,8 @@ const VoterLogin = () => {
       // Handle unexpected errors
       alert('An error occurred during login');
       console.log("Login failed error:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -75,6 +81,7 @@ const VoterLogin = () => {
             </label>
           </div>
           <button type="submit" className="btn-submit">
+            {loading && <Spinner />}
             Sign In
           </button>
         </form>

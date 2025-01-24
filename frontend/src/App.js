@@ -20,7 +20,7 @@ import Dashboard from './pages/Dashboard';
 import VoterLoginDashboard from './pages/voterLoginDashboard';
 import CandidateList from "./pages/CandidateList";
 import UpdatePassword from './pages/UpdatePassword';
-import VoterTracking from './components/VoterTracking'; // Import VoterTracking
+import VoterTracking from './components/VoterTracking';
 import TimerComponent from './components/TimerComponent';
 import ElectionPositionsPage from './pages/ElectionPositionsPage';
 import LiveResultsPage from './pages/LiveResultsPage';
