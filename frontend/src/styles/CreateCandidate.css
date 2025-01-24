@@ -1,3 +1,4 @@
+/* This file contains the styles for the CreateCandidate component */
 .create-candidate {
 	max-width: 500px;
 	margin: 0 auto;
@@ -7,7 +8,7 @@
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 	font-family: Arial, sans-serif;
   }
-  
+ /* Candidate form styles */ 
   h1 {
 	text-align: center;
 	color: #333;
@@ -30,7 +31,7 @@
 	border: 1px solid #ccc;
 	border-radius: 4px;
   }
-  
+  /* Error message styles */
   button {
 	width: 100%;
 	padding: 10px;

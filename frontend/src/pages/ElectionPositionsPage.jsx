@@ -1,6 +1,6 @@
 import React from "react";
 import '../styles/ElectionPositionsPage.css';
-
+// ElectionPositionsPage component
 const ElectionPositionsPage = () => {
   const positions = [
     {
@@ -44,7 +44,7 @@ const ElectionPositionsPage = () => {
     },
     // Add more positions here...
   ];
-
+// Render the ElectionPositionsPage component
   return (
     <div className="positions-page">
       <h1>Election Positions</h1>

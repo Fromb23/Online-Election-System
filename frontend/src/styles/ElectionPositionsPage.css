@@ -6,7 +6,7 @@ body {
 	background-color: #f9f9f9;
   }
   
-  /* Button Styles */
+  /* button styles */
   .election-worker-button {
 	background-color: #007bff;
 	color: white;
@@ -45,7 +45,7 @@ body {
 	gap: 20px;
 	justify-content: center;
   }
-  
+  /* Position card styles */
   .position-card {
 	background-color: white;
 	border: 1px solid #ddd;
@@ -79,7 +79,7 @@ body {
   .position-card ul li {
 	margin-bottom: 5px;
   }
-  
+  /* Apply link styles */
   .apply-link {
 	display: block;
 	text-align: center;

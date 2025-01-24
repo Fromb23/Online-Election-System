@@ -1,3 +1,42 @@
+ HEAD
+.vote-by-mail-container {
+    max-width: 500px;
+    margin: 30px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .vote-by-mail-container form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .vote-by-mail-container div {
+    margin-bottom: 15px;
+  }
+  
+  .vote-by-mail-container label {
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .vote-by-mail-container input {
+    padding: 8px;
+    font-size: 1rem;
+  }
+  
+  .vote-by-mail-container button {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+
 .votebymail-info-container {
   max-width: 800px;
   margin: 0 auto;

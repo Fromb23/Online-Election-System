@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../../services/api";
 
-// submit a vote
+// Submit a vote
 export const submitVote = createAsyncThunk(
   "vote/submitVote",
   async (voteData, { rejectWithValue }) => {

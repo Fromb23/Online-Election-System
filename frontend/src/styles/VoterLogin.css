@@ -5,7 +5,7 @@
 	min-height: 100vh;
 	background: url('../assets/images/voterLoginBackground.jpg') no-repeat center center/cover;
   }
-  
+  /* Voter login card styles */
   .voter-login-card {
 	background-color: #fff;
 	border-radius: 10px;
@@ -42,7 +42,7 @@
 	border: 1px solid #ccc;
 	border-radius: 5px;
   }
-  
+  /* Icon styles */
   .icon-user,
   .icon-lock {
 	position: absolute;
@@ -50,7 +50,7 @@
 	top: 50%;
 	transform: translateY(-50%);
   }
-  
+  /* Error message styles */
   .btn-submit {
 	background-color: #0047ab;
 	color: #fff;
